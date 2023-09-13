@@ -1,26 +1,50 @@
 import { ref } from "vue";
 
-export const currentArea = ref<keyof typeof areas>("startArea");
+export const currentArea = ref<AreaNames>("spawn");
+export type Area = (typeof areas.value)[keyof typeof areas.value];
 
-export type Area = (typeof areas)[keyof typeof areas];
+type AreaNames = "spawn" | "market";
 
-export const areas = {
-  startArea: {
+export const areas = ref<
+  Record<
+    AreaNames,
+    {
+      width: number;
+      height: number;
+      npcs: number[];
+      portals: {
+        id: number;
+        position: [number, number];
+        targetArea: AreaNames;
+        targetPortalId: number;
+      }[];
+    }
+  >
+>({
+  spawn: {
     width: 15,
     height: 10,
-    npcs: [
+    npcs: [1, 2],
+    portals: [
       {
-        name: "NPC",
-        x: 160,
-        y: 160,
-        dialog: "test",
-      },
-      {
-        name: "NPC2",
-        x: 260,
-        y: 260,
-        dialog: "test2",
+        id: 1,
+        position: [6, 1],
+        targetArea: "market",
+        targetPortalId: 1,
       },
     ],
   },
-} as const;
+  market: {
+    width: 15,
+    height: 10,
+    npcs: [],
+    portals: [
+      {
+        id: 1,
+        position: [6, 10],
+        targetArea: "spawn",
+        targetPortalId: 1,
+      },
+    ],
+  },
+});

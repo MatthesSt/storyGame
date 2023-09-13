@@ -1,11 +1,11 @@
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const pressedKeys = ref({
   ArrowUp: false,
   ArrowDown: false,
   ArrowLeft: false,
   ArrowRight: false,
-  a: false,
+  e: false,
 });
 
 window.onkeydown = (event: any) => {

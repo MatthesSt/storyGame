@@ -8,12 +8,12 @@ defineProps<{
 
 function execute(
   npc: Entity,
-  answer: { action?: () => void; text: string; next?: number }
+  answer: { action?: () => void; text: string; next?: string }
 ) {
   if (answer.next) {
     npc.currentDialog = answer.next;
   } else {
-    npc.currentDialog = 0;
+    npc.currentDialog = "";
     npc.talking = false;
     player.value.talking = false;
   }

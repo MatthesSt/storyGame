@@ -1,7 +1,11 @@
 import { ref } from "vue";
-import { Entity } from "./types";
+import { Entity, InvetorySlot } from "./types";
+import { createInventoryWithItems } from "./utils";
+import { Tuple } from "./typehelpers";
 
-export const npcInventory = ref<Entity["inventory"]["items"]>([]);
+export const npcInventory = ref<Tuple<InvetorySlot, 16>>(
+  createInventoryWithItems([])
+);
 
 export const npcs = ref<Entity[]>([
   {
@@ -11,61 +15,63 @@ export const npcs = ref<Entity[]>([
     money: 0,
     inventory: {
       size: 16,
-      items: [],
+      items: createInventoryWithItems([]),
     },
     y: 160,
+    direction: 0,
+    movespeed: 0,
     dialog: {
-      1: {
+      init: {
         text: "test",
         answers: [
           {
-            text: "next Text",
-            next: 2,
-            action: () => console.log("clicked answer1"),
+            text: "continue",
+            next: "exit",
           },
           {
             text: "bye",
           },
         ],
       },
-      2: {
+      exit: {
         text: "test2",
         answers: [
           {
             text: "back",
-            next: 1,
+            next: "init",
           },
         ],
       },
     },
-    currentDialog: 0,
+    currentDialog: "",
     talking: false,
   },
   {
     id: 2,
     name: "Merchant",
     x: 260,
+    direction: 0,
+    movespeed: 0,
     y: 260,
     money: 0,
     talking: false,
     inventory: {
       size: 16,
-      items: [
+      items: createInventoryWithItems([
         {
           amount: 3,
           id: 1,
-          inventorySlotIndex: 0,
         },
-      ],
+      ]),
       openend: false,
     },
     dialog: {
-      1: {
+      init: {
         text: "Hi",
         answers: [
           {
             text: "open shop",
-            next: 2,
+            next: "exit",
             action: () => {
               const inventory = npcs.value.find((n) => n.id == 2)!.inventory;
               npcInventory.value = inventory.items;
@@ -77,7 +83,7 @@ export const npcs = ref<Entity[]>([
           },
         ],
       },
-      2: {
+      exit: {
         text: "choose what you want",
         answers: [
           {

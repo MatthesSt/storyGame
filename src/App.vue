@@ -27,7 +27,7 @@ import { getTileIndices } from "./math";
             areas[currentArea].npcs.find((n) => n == e.id)
           )"
           :player="npc"
-          :closeNpc="npc.id == closeNpc?.id"
+          :canTalk="npc.id == closeNpc?.id"
         ></Player>
       </template>
       <template #dialog>

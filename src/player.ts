@@ -1,10 +1,11 @@
 import { computed, ref, watch } from "vue";
 import { isPressed } from "./controls";
 import { getDistance, getTileIndices, getTilePosition } from "./math";
-import { Entity, Item, ItemSlot, Player } from "./types";
+import { Entity, Item, InvetorySlot, Player } from "./types";
 import { npcs } from "./npcs";
 import { currentArea, areas } from "./area";
 import { items } from "./items";
+import { createInventoryWithItems } from "./utils";
 
 export const player = ref<Player>({
   id: 0,
@@ -12,12 +13,12 @@ export const player = ref<Player>({
   x: 160,
   y: 160,
   money: 100,
-  direction: 0 as 0 | 45 | 90 | 135 | 180 | 225 | 270 | 315,
+  direction: 0,
   movespeed: 3,
   talking: false,
   inventory: {
     size: 16,
-    items: [{ amount: 1, id: 1, inventorySlotIndex: 0 }],
+    items: createInventoryWithItems([{ amount: 1, id: 1 }]),
   },
 });
 
@@ -42,7 +43,7 @@ function playerCommunication() {
   if (!talkingNpc || !talkingNpc.dialog) return;
   player.value.talking = true;
   talkingNpc.talking = true;
-  talkingNpc.currentDialog = talkingNpc.currentDialog || 1;
+  talkingNpc.currentDialog = talkingNpc.currentDialog || "";
 }
 
 function playerMovement() {
@@ -137,7 +138,7 @@ export function sellItem(itemId: number, merchantId: number) {
   giveItemToEntity(merchant, item, itemId);
 }
 
-function takeItemFromEntity(entity: Player | Entity, item: ItemSlot) {
+function takeItemFromEntity(entity: Entity, item: InvetorySlot) {
   item.amount--;
   if (item.amount <= 0) {
     entity.inventory.items.splice(entity.inventory.items.indexOf(item), 1);
@@ -145,15 +146,14 @@ function takeItemFromEntity(entity: Player | Entity, item: ItemSlot) {
 }
 
 function giveItemToEntity(
-  entity: Player | Entity,
-  playerItem: ItemSlot | undefined,
+  entity: Entity,
+  playerItem: InvetorySlot | undefined,
   itemId: number
 ) {
   if (!playerItem) {
     playerItem = {
       amount: 1,
       id: itemId,
-      inventorySlotIndex: entity.inventory.items.length,
     };
     entity.inventory.items.push(playerItem);
   } else {

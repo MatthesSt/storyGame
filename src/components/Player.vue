@@ -3,14 +3,14 @@ import { toRefs } from "vue";
 import { Entity } from "../types";
 const props = defineProps<{
   player: Entity;
-  closeNpc?: boolean;
+  canTalk?: boolean;
 }>();
 const { player } = toRefs(props);
 </script>
 <template>
   <div
     class="player"
-    :class="closeNpc && player.dialog ? 'closeNpc' : ''"
+    :class="canTalk && player.dialog ? 'canTalk' : ''"
     :data-name="player.name"
     :style="`top:${player.y}px;left:${player.x}px;background-color:${
       player.talking ? 'red' : 'black'
@@ -35,7 +35,7 @@ $size: calc(#{$tileSize} * #{$ration});
     transform: translateY(-100%) translateX(calc($size / 2)) translateX(-50%);
   }
 }
-.closeNpc::after {
+.canTalk::after {
   content: "talk (e)";
   width: max-content;
   bottom: 0;

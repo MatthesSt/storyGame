@@ -1,4 +1,5 @@
 import type { Item } from "./types.ts";
+
 export const items: Record<Item["id"], Item> = {
   1: {
     name: "Stick",

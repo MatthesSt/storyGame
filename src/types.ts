@@ -1,39 +1,39 @@
+import { Tuple } from "./typehelpers";
+
 export type Entity = {
   id: number;
   name: string;
   x: number;
   y: number;
   money: number;
+  direction: number;
+  movespeed: number;
+
   talking?: boolean;
   inventory: {
     size: number;
-    items: ItemSlot[];
+    items: Tuple<InvetorySlot, 16>;
     openend?: boolean;
     blockOpen?: boolean;
   };
-  currentDialog?: number;
+  currentDialog?: string;
   dialog?: Record<
-    number,
+    string,
     {
       text: string;
       answers: {
         text: string;
-        next?: number;
+        next?: string;
         action?: () => void;
       }[];
     }
   >;
 };
+export type Player = Entity & {};
 
-export type Player = Entity & {
-  direction: 0 | 45 | 90 | 135 | 180 | 225 | 270 | 315;
-  movespeed: number;
-};
-
-export type ItemSlot = {
+export type InvetorySlot = {
   amount: number;
   id: number;
-  inventorySlotIndex: number;
 };
 
 export const CATEGORIES = ["weapon", "consumable", "misc"] as const;

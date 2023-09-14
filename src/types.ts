@@ -39,6 +39,7 @@ export type ItemSlot = {
 export const CATEGORIES = ["weapon", "consumable", "misc"] as const;
 
 export type Item = {
+  image: string;
   name: string;
   id: number;
   category: (typeof CATEGORIES)[number];

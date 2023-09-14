@@ -8,5 +8,6 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 10,
     value: 1,
     damage: 1,
+    image: "wood_stick.png",
   },
 };

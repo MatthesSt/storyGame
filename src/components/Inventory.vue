@@ -19,7 +19,13 @@ function sellToMerchant(n: number) {
   <div class="playerInventory" v-if="player.inventory.openend">
     <div class="tile" v-for="n in player.inventory.size">
       <button @click.stop="sellToMerchant(n)" class="selectableItem">
-        {{ items[player.inventory.items[n - 1]?.id]?.name }}
+        <img
+          v-if="items[player.inventory.items[n - 1]?.id]?.image"
+          :src="items[player.inventory.items[n - 1]?.id]?.image"
+        />
+        <span v-else>
+          {{ items[player.inventory.items[n - 1]?.id]?.name }}</span
+        >
       </button>
       <span class="amount">{{ player.inventory.items[n - 1]?.amount }}</span>
     </div>
@@ -31,7 +37,11 @@ function sellToMerchant(n: number) {
         @click.stop="buyItem(npcInventory[n - 1].id, closeNpc.id)"
         class="selectableItem"
       >
-        {{ items[npcInventory[n - 1]?.id]?.name }}
+        <img
+          v-if="items[npcInventory[n - 1]?.id]?.image"
+          :src="items[npcInventory[n - 1]?.id]?.image"
+        />
+        <span v-else> {{ items[npcInventory[n - 1]?.id]?.name }}</span>
       </button>
       <span class="amount">{{ npcInventory[n - 1]?.amount }}</span>
     </div>

@@ -1,18 +1,24 @@
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { isPressed } from "./controls";
 import { getDistance, getTileIndices, getTilePosition } from "./math";
-import { Player } from "./types";
+import { Entity, Item, ItemSlot, Player } from "./types";
 import { npcs } from "./npcs";
 import { currentArea, areas } from "./area";
+import { items } from "./items";
 
 export const player = ref<Player>({
   id: 0,
   name: "Player",
   x: 160,
   y: 160,
+  money: 100,
   direction: 0 as 0 | 45 | 90 | 135 | 180 | 225 | 270 | 315,
   movespeed: 3,
   talking: false,
+  inventory: {
+    size: 16,
+    items: [{ amount: 1, id: 1, inventorySlotIndex: 0 }],
+  },
 });
 
 const gameTicks = ref(0);
@@ -25,10 +31,14 @@ const playerInputInterval = setInterval(() => {
     if (gameTicks.value % 12 == 0) checkPortals();
   }
   playerCommunication();
+  playerInventory();
 }, 1000 / ticksPerSecond);
+
 function playerCommunication() {
   if (!player.value.talking && !isPressed("e")) return;
-  const talkingNpc = npcs.value.find((npc) => npc.id == closeNpc.value?.id);
+  const talkingNpc = areas.value[currentArea.value].npcs
+    .map((e) => npcs.value.find((n) => n.id == e))
+    .find((npc) => npc?.id == closeNpc.value?.id);
   if (!talkingNpc || !talkingNpc.dialog) return;
   player.value.talking = true;
   talkingNpc.talking = true;
@@ -47,6 +57,15 @@ function playerMovement() {
   }
   if (isPressed("ArrowRight")) {
     movePlayer(1, 0);
+  }
+}
+function playerInventory() {
+  if (isPressed("i") && !player.value.inventory.blockOpen) {
+    player.value.inventory.blockOpen = true;
+    setTimeout(() => {
+      player.value.inventory.blockOpen = false;
+    }, 100);
+    player.value.inventory.openend = !player.value.inventory.openend;
   }
 }
 function checkPortals() {
@@ -83,3 +102,73 @@ export function movePlayer(dx: number, dy: number) {
 export const closeNpc = computed(() =>
   npcs.value.find((npc) => getDistance(npc, player.value) < 65)
 );
+
+export function buyItem(itemId: number, merchantId: number) {
+  if (player.value.money < items[itemId].value) return;
+
+  let playerItem = player.value.inventory.items.find((i) => i.id == itemId);
+
+  if (!hasFreeInventorySpace(player.value.inventory, itemId)) return;
+  console.log("has free inventory space");
+  giveItemToEntity(player.value, playerItem, itemId);
+  player.value.money -= items[itemId].value;
+
+  const item = npcs.value
+    .find((n) => n.id == merchantId)
+    ?.inventory.items.find((i) => i.id == itemId);
+  if (!item) return;
+  const merchant = npcs.value.find((n) => n.id == merchantId)!;
+  takeItemFromEntity(merchant, item);
+}
+
+export function sellItem(itemId: number, merchantId: number) {
+  let playerItem = player.value.inventory.items.find((i) => i.id == itemId);
+  if (!playerItem) return;
+
+  const merchant = npcs.value.find((n) => n.id == merchantId)!;
+  const item = merchant?.inventory.items.find((i) => i.id == itemId);
+
+  if (!hasFreeInventorySpace(merchant.inventory, itemId)) return;
+  console.log("has free inventory space");
+
+  takeItemFromEntity(player.value, playerItem);
+  player.value.money += items[itemId].value;
+
+  giveItemToEntity(merchant, item, itemId);
+}
+
+function takeItemFromEntity(entity: Player | Entity, item: ItemSlot) {
+  item.amount--;
+  if (item.amount <= 0) {
+    entity.inventory.items.splice(entity.inventory.items.indexOf(item), 1);
+  }
+}
+
+function giveItemToEntity(
+  entity: Player | Entity,
+  playerItem: ItemSlot | undefined,
+  itemId: number
+) {
+  if (!playerItem) {
+    playerItem = {
+      amount: 1,
+      id: itemId,
+      inventorySlotIndex: entity.inventory.items.length,
+    };
+    entity.inventory.items.push(playerItem);
+  } else {
+    if (playerItem.amount >= items[itemId].maxStack!) {
+      entity.inventory.items.push({ ...playerItem, amount: 1 });
+    } else {
+      playerItem.amount++;
+    }
+  }
+}
+
+function hasFreeInventorySpace(inventory: Entity["inventory"], itemId: number) {
+  return (
+    inventory.items.length < inventory.size ||
+    inventory.items.find((i) => i.id == itemId)?.amount! <
+      items[itemId].maxStack!
+  );
+}

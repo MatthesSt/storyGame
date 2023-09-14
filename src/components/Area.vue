@@ -26,6 +26,7 @@ const { area } = toRefs(props);
     ></div>
     <slot name="player"></slot>
     <slot name="dialog"></slot>
+    <slot name="inventory"></slot>
   </div>
 </template>
 <style scoped lang="scss">

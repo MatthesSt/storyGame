@@ -2,10 +2,11 @@
 import Area from "./components/Area.vue";
 import Player from "./components/Player.vue";
 import NpcDialog from "./components/NpcDialog.vue";
+import Inventory from "./components/Inventory.vue";
 import { areas, currentArea } from "./area";
 import { player, closeNpc } from "./player";
 import { npcs } from "./npcs";
-import { getTileIndices, getTilePosition } from "./math";
+import { getTileIndices } from "./math";
 </script>
 
 <template>
@@ -31,6 +32,9 @@ import { getTileIndices, getTilePosition } from "./math";
       </template>
       <template #dialog>
         <NpcDialog v-if="closeNpc" :npc="closeNpc" />
+      </template>
+      <template #inventory>
+        <Inventory :player="player" />
       </template>
     </Area>
   </main>

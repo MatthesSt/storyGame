@@ -13,18 +13,17 @@ const { area } = toRefs(props);
     :style="`grid-template-columns:repeat(${area.width},1fr)`"
   >
     <div v-for="x in area.width">
-      <div
-        v-for="y in area.height"
-        class="tile"
-        :style="`background-color: ${
-          area.portals.find(
-            (portal) => portal.position[0] === x && portal.position[1] === y
-          )
-            ? 'yellow'
-            : 'white'
-        }`"
-      ></div>
+      <div v-for="y in area.height" class="tile"></div>
     </div>
+    <div
+      v-for="portal in area.portals"
+      class="portal"
+      :style="{
+        backgroundColor: portal.blocked ? 'grey' : 'yellow',
+        top: (portal.position[1] - 1) * 40 + 'px',
+        left: (portal.position[0] - 1) * 40 + 'px',
+      }"
+    ></div>
     <slot name="player"></slot>
     <slot name="dialog"></slot>
   </div>
@@ -35,5 +34,12 @@ const { area } = toRefs(props);
   width: $tileSize;
   height: $tileSize;
   border: 1px solid #aaa;
+  background-color: white;
+}
+.portal {
+  width: $tileSize;
+  height: $tileSize;
+  border: 1px solid #aaa;
+  position: absolute;
 }
 </style>

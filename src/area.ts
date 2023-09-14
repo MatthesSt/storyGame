@@ -1,13 +1,13 @@
 import { ref } from "vue";
 
-export const currentArea = ref<AreaNames>("spawn");
+export const currentArea = ref<AreaName>("spawn");
 export type Area = (typeof areas.value)[keyof typeof areas.value];
 
-type AreaNames = "spawn" | "market";
+type AreaName = "spawn" | "market";
 
 export const areas = ref<
   Record<
-    AreaNames,
+    AreaName,
     {
       width: number;
       height: number;
@@ -15,8 +15,9 @@ export const areas = ref<
       portals: {
         id: number;
         position: [number, number];
-        targetArea: AreaNames;
+        targetArea: AreaName;
         targetPortalId: number;
+        blocked: boolean;
       }[];
     }
   >
@@ -31,6 +32,7 @@ export const areas = ref<
         position: [6, 1],
         targetArea: "market",
         targetPortalId: 1,
+        blocked: false,
       },
     ],
   },
@@ -44,6 +46,7 @@ export const areas = ref<
         position: [6, 10],
         targetArea: "spawn",
         targetPortalId: 1,
+        blocked: false,
       },
     ],
   },

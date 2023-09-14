@@ -15,13 +15,17 @@ export const player = ref<Player>({
   talking: false,
 });
 
+const gameTicks = ref(0);
+const ticksPerSecond = 24;
+
 const playerInputInterval = setInterval(() => {
+  gameTicks.value++;
   if (!player.value.talking) {
     playerMovement();
-    checkPortals();
+    if (gameTicks.value % 12 == 0) checkPortals();
   }
   playerCommunication();
-}, 1000 / 24);
+}, 1000 / ticksPerSecond);
 function playerCommunication() {
   if (!player.value.talking && !isPressed("e")) return;
   const talkingNpc = npcs.value.find((npc) => npc.id == closeNpc.value?.id);
@@ -47,18 +51,23 @@ function playerMovement() {
 }
 function checkPortals() {
   const playerTileIndices = getTileIndices([player.value.x, player.value.y]);
-  const usedPortal = areas.value[currentArea.value].portals.find((portal) => {
-    getTileIndices(portal.position)[0] == playerTileIndices[0] &&
-      getTileIndices(portal.position)[1] == playerTileIndices[1];
-  });
-  if (usedPortal) {
+  const usedPortal = areas.value[currentArea.value].portals.find(
+    (p) =>
+      p.position[0] == playerTileIndices[0] &&
+      p.position[1] == playerTileIndices[1]
+  );
+  if (usedPortal && !usedPortal.blocked) {
     currentArea.value = usedPortal.targetArea;
-    const nextArea = areas.value[currentArea.value].portals.find(
-      (portal) => portal.id == usedPortal.targetPortalId
+    const nextPortal = areas.value[currentArea.value].portals.find(
+      (p) => p.id == usedPortal.targetPortalId
     );
-    if (!nextArea) return;
-    player.value.x = getTilePosition(nextArea.position)[0];
-    player.value.y = getTilePosition(nextArea.position)[1];
+    if (!nextPortal) return;
+    nextPortal.blocked = true;
+    setTimeout(() => {
+      nextPortal.blocked = false;
+    }, 2000);
+    player.value.x = getTilePosition(nextPortal.position)[0];
+    player.value.y = getTilePosition(nextPortal.position)[1];
   }
 }
 

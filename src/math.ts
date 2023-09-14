@@ -7,7 +7,7 @@ export function getDistance(entity1: Entity, entity2: Entity) {
 }
 
 export function getTileIndices(position: [number, number]): [number, number] {
-  return [Math.round(position[0] / 40) + 1, Math.round(position[1] / 40) + 1];
+  return [Math.ceil(position[0] / 40), Math.ceil(position[1] / 40)];
 }
 
 export function getTilePosition(position: [number, number]): [number, number] {

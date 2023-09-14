@@ -5,10 +5,19 @@ import NpcDialog from "./components/NpcDialog.vue";
 import { areas, currentArea } from "./area";
 import { player, closeNpc } from "./player";
 import { npcs } from "./npcs";
+import { getTileIndices, getTilePosition } from "./math";
 </script>
 
 <template>
   <main>
+    <div id="debugArea" style="position: absolute; inset: 0; color: white">
+      <span
+        >{{ player.x }}, {{ player.y }},{{
+          getTileIndices([player.x, player.y])
+        }}</span
+      >
+      <span>portal: {{ areas[currentArea].portals[0].position }}</span>
+    </div>
     <Area :area="areas[currentArea]">
       <template #player>
         <Player :player="player"></Player>

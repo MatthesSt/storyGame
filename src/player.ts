@@ -5,7 +5,11 @@ import { Entity, Player } from "./types";
 import { npcs } from "./npcs";
 import { currentArea, areas } from "./area";
 import { items } from "./items";
-import { createInventoryWithItems, entityFactory } from "./utils";
+import {
+  createInventoryWithItems,
+  entityFactory,
+  createEquipmentWithItems,
+} from "./utils";
 
 export const player = ref<Player>(
   entityFactory({
@@ -20,17 +24,17 @@ export const player = ref<Player>(
       size: 16,
       items: createInventoryWithItems([{ amount: 1, id: 1 }]),
     },
-    equipment: {
+    equipment: createEquipmentWithItems({
       head: items[1],
       body: items[1],
-      arms: items[1],
       legs: items[1],
+      shield: items[1],
+      arms: items[1],
       boots: items[1],
       weapon: items[1],
-      shield: items[1],
       tool: items[1],
       accessory: items[1],
-    },
+    }),
   })
 );
 

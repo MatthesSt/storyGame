@@ -4,10 +4,27 @@ import { Entity, InvetorySlot } from "./types";
 
 const entityCounter = ref(1);
 
-export function createInventoryWithItems(items: InvetorySlot[]) {
+export function createInventoryWithItems(items?: InvetorySlot[]) {
   return Array(16)
     .fill({ amount: 0, id: 0 })
-    .map((_, i) => items[i] || { amount: 0, id: 0 }) as Tuple<InvetorySlot, 16>;
+    .map((_, i) => items?.[i] || { amount: 0, id: 0 }) as Tuple<
+    InvetorySlot,
+    16
+  >;
+}
+
+export function createEquipmentWithItems(items?: Partial<Entity["equipment"]>) {
+  return {
+    head: items?.head || null,
+    body: items?.body || null,
+    legs: items?.legs || null,
+    shield: items?.shield || null,
+    arms: items?.arms || null,
+    boots: items?.boots || null,
+    weapon: items?.weapon || null,
+    tool: items?.tool || null,
+    accessory: items?.accessory || null,
+  };
 }
 
 export function entityFactory(options: Partial<Entity> = {}): Entity {
@@ -23,19 +40,9 @@ export function entityFactory(options: Partial<Entity> = {}): Entity {
     talking: false,
     inventory: {
       size: 16,
-      items: createInventoryWithItems([]),
+      items: createInventoryWithItems(),
     },
-    equipment: {
-      head: null,
-      body: null,
-      arms: null,
-      legs: null,
-      boots: null,
-      weapon: null,
-      shield: null,
-      tool: null,
-      accessory: null,
-    },
+    equipment: createEquipmentWithItems(),
     ...options,
   };
 }

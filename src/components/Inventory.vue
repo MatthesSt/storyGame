@@ -9,12 +9,17 @@ defineProps<{
 }>();
 
 function sellToMerchant(item: InvetorySlot) {
-  if (!closeNpc.value) return;
+  if (
+    !closeNpc.value ||
+    !closeNpc.value.talking ||
+    !closeNpc.value.inventory.openend
+  )
+    return;
   sellItem(item.id, closeNpc.value.id);
 }
 </script>
 <template>
-  <div class="playerInventory" v-if="player.inventory.openend">
+  <section class="playerInventory" v-if="player.inventory.openend">
     <div class="tile" v-for="item in player.inventory.items">
       <template v-if="item.id != 0">
         <button @click.stop="sellToMerchant(item)" class="selectableItem">
@@ -24,14 +29,21 @@ function sellToMerchant(item: InvetorySlot) {
         <span class="amount">{{ item.amount }}</span>
       </template>
     </div>
-    <div class="inventoryFooter">Gold: {{ player?.money }}</div>
-  </div>
-  <div class="playerEquipment">
-    <div class="equipment" v-for="item in player.equipment">
+    <div class="inventoryFooter">
+      {{ player?.money }}
+      <img src="item/coin.png" style="height: 100%; margin-left: 5px" />
+    </div>
+  </section>
+  <section class="playerEquipment">
+    <div
+      class="equipment"
+      v-for="[key, item] in Object.entries(player.equipment || {})"
+      :style="`background-image:url(equipment_bg/${key}_bg.png)`"
+    >
       <img v-if="item" :src="item.image" :alt="item.name" />
     </div>
-  </div>
-  <div class="npcInventory" v-if="closeNpc?.inventory.openend">
+  </section>
+  <section class="npcInventory" v-if="closeNpc?.inventory.openend">
     <div class="tile" v-for="item in npcInventory">
       <template v-if="item.id != 0">
         <button
@@ -44,7 +56,7 @@ function sellToMerchant(item: InvetorySlot) {
         <span class="amount">{{ item.amount }}</span>
       </template>
     </div>
-  </div>
+  </section>
 </template>
 <style lang="scss" scoped>
 @import "../style.scss";
@@ -78,6 +90,7 @@ function sellToMerchant(item: InvetorySlot) {
   justify-content: center;
   align-items: center;
   position: relative;
+  background-size: cover;
 }
 .tile {
   width: $tileSize;
@@ -96,6 +109,8 @@ function sellToMerchant(item: InvetorySlot) {
   bottom: 0%;
   transform: translateY(100%);
   padding: 2px;
+  display: flex;
+  align-items: center;
 }
 .npcInventory {
   width: calc($tileSize * 4);

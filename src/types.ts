@@ -11,7 +11,7 @@ export type Entity = {
   direction: number;
   movespeed: number;
   image: string;
-
+  lookRadius: number;
   talking: boolean;
   inventory: {
     size: number;

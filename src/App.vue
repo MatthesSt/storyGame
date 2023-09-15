@@ -32,7 +32,7 @@ import { enemies } from "./enemy";
           :canTalk="npc.id == closeNpc?.id"
         ></Entity>
         <Entity
-          v-for="enemy in enemies.filter((e) =>
+          v-for="enemy in enemies.filter((e:any) =>
             areas[currentArea].enemies?.find((n) => n == e.id)
           )"
           :entity="enemy"

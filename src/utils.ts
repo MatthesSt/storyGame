@@ -14,8 +14,11 @@ export function entityFactory(options: Partial<Entity> = {}): Entity {
   return {
     id: entityCounter.value++,
     name: "",
+    lookRadius:0,
     x: 0,
     y: 0,
+    width:40,
+    height:40,
     image: "",
     direction: 0,
     movespeed: 0,

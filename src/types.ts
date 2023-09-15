@@ -1,5 +1,18 @@
 import { Tuple } from "./typehelpers";
 
+export const CATEGORIES = [
+  "head",
+  "body",
+  "arms",
+  "legs",
+  "boots",
+  "weapon",
+  "shield",
+  "tool",
+  "accessory",
+] as const;
+export type ItemCategory = (typeof CATEGORIES)[number];
+
 export type Entity = {
   id: number;
   name: string;
@@ -48,13 +61,11 @@ export type InvetorySlot = {
   id: number;
 };
 
-export const CATEGORIES = ["weapon", "consumable", "misc"] as const;
-
 export type Item = {
   image: string;
   name: string;
   id: number;
-  category: (typeof CATEGORIES)[number];
+  category: ItemCategory;
   description?: string;
   maxStack?: number;
   value: number;

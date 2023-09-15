@@ -129,12 +129,12 @@ export function buyItem(itemId: number, merchantId: number) {
   takeItemFromEntity(merchant, itemId);
 }
 
-export function sellItem(itemId: number, merchantId: number) {
+export function sellItem(itemId: number, merchant: Entity | undefined) {
+  if (!merchant || !merchant.talking || !merchant.inventory.openend) return;
   if (!hasItem(player.value, itemId)) return;
 
-  const merchant = npcs.value.find((n) => n.id == merchantId)!;
-  if (!hasFreeInventorySpace(merchant, itemId)) return;
   if (!hasMoney(merchant, items[itemId].value)) return;
+  if (!hasFreeInventorySpace(merchant, itemId)) return;
 
   takeItemFromEntity(player.value, itemId);
   updateMoneyFromEntity(player.value, items[itemId].value);
@@ -152,15 +152,15 @@ function hasItem(entity: Entity, itemId: number) {
   return entity.inventory.items.find((i) => i.id == itemId);
 }
 
-function takeItemFromEntity(entity: Entity, itemId: number) {
+export function takeItemFromEntity(entity: Entity, itemId: number) {
   const item = entity.inventory.items.find((i) => i.id == itemId)!;
   item.amount--;
   if (item.amount <= 0) {
-    entity.inventory.items.find((i) => i.id == item.id)!.id = 0;
+    item.id = 0;
   }
 }
 
-function giveItemToEntity(entity: Entity, itemId: number) {
+export function giveItemToEntity(entity: Entity, itemId: number) {
   let item = entity.inventory.items.find((i) => i.id == itemId);
   if (!item || item.amount >= items[itemId].maxStack!) {
     const freeSlotIndex = entity.inventory.items.findIndex((i) => i.id == 0);
@@ -173,7 +173,7 @@ function giveItemToEntity(entity: Entity, itemId: number) {
   }
 }
 
-function hasFreeInventorySpace(entitiy: Entity, itemId: number) {
+export function hasFreeInventorySpace(entitiy: Entity, itemId: number) {
   return (
     entitiy.inventory.items.find((i) => i.id == 0) ||
     entitiy.inventory.items.find((i) => i.id == itemId)?.amount! <

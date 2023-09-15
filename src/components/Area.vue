@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toRefs } from "vue";
-import type { Area } from "../area";
+import type { Area } from "../ts/area";
 
 const props = defineProps<{
   area: Area;

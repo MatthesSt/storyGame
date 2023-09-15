@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Entity, InvetorySlot } from "../types";
-import { items } from "../items";
-import { npcInventory } from "../npcs";
-import { buyItem, closeNpc, sellItem } from "../player";
+import { Entity, InvetorySlot } from "../ts/types";
+import { items } from "../ts/items";
+import { npcInventory } from "../ts/npcs";
+import { buyItem, closeNpc, sellItem } from "../ts/player";
 
 defineProps<{
   player: Entity;

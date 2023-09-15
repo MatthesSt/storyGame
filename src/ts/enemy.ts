@@ -3,7 +3,7 @@ import {player} from "./player"
 import { Entity } from "./types";
 import { ref } from "vue";
 import { areas, currentArea } from "./area";
-import { getDistance } from "./math";
+import { getDistance, getVector } from "./math";
 
 export const enemies= ref<Entity[]>([
    entityFactory({
@@ -15,8 +15,8 @@ export const enemies= ref<Entity[]>([
     y: 200,
     height: 12,
     width: 28,
-    movespeed: 0.1, //schnell genug zum sehen aber langsam genug zum weglaufen können
-    lookRadius:50,
+    movespeed: 4, //schnell genug zum sehen aber langsam genug zum weglaufen können
+    lookRadius:100,
     image: "enemy/bat.png",
   }),
   entityFactory({
@@ -28,8 +28,8 @@ export const enemies= ref<Entity[]>([
     y: 220,
     height: 28,
     width: 26,
-    movespeed: 0.1, //schnell genug zum sehen aber langsam genug zum weglaufen können
-    lookRadius:50,
+    movespeed: 2, //schnell genug zum sehen aber langsam genug zum weglaufen können
+    lookRadius:75,
     image: "enemy/slime.png",
   })
 ]);
@@ -47,23 +47,16 @@ export function moveEnemy() {
   let closeEnemies = enemies.value.filter((e)=> getDistance(player.value, e)< e.lookRadius  )
   if (closeEnemies.length) {
     for (let enemy of closeEnemies){
-      console.log("enemy moved to player")
-      enemy.x += (player.value.x - enemy.x) *enemy.movespeed 
-      enemy.y += (player.value.y - enemy.y) *enemy.movespeed
+      enemy.x += getVector(enemy,player.value)[0] *enemy.movespeed 
+      enemy.y += getVector(enemy,player.value)[1] *enemy.movespeed
     }
-  }
+  } 
+  //TODO: wenn spieler nicht in der nähe, entweder zum spawnpunkt zurück kehren oder sich hin und her bewegen.
   // else {
   //   for (let enemy of enemies.value){
-  //     enemy.x += enemy.StartX - enemy.x 
-  //     enemy.y = enemy.StartY - enemy.y
-  //     console.log("enemy moved to start")
-  //       }   
-  //   }
+  //     console.log("move")
+  //     enemy.x += (Math.random()>0.5 ? Math.random() *enemy.movespeed :-Math.random() *enemy.movespeed )*2
+  //     enemy.y += (Math.random()>0.5 ? Math.random() *enemy.movespeed :-Math.random() *enemy.movespeed )*2
+  //    }
+  // }
 }
-
-  
-
-
-
-
-

@@ -4,11 +4,11 @@ import Entity from "./components/Entity.vue";
 import Enemy from "./components/Enemy.vue";
 import NpcDialog from "./components/NpcDialog.vue";
 import Inventory from "./components/Inventory.vue";
-import { areas, currentArea } from "./area";
-import { player, closeNpc } from "./player";
-import { npcs } from "./npcs";
-import { getTileIndices } from "./math";
-import { enemies } from "./enemy";
+import { areas, currentArea } from "./ts/area";
+import { player, closeNpc } from "./ts/player";
+import { npcs } from "./ts/npcs";
+import { getTileIndices } from "./ts/math";
+import { enemies } from "./ts/enemy";
 </script>
 
 <template>

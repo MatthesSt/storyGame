@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Entity } from "../types";
-import { player } from "../player";
+import { Entity } from "../ts/types";
+import { player } from "../ts/player";
 
 defineProps<{
   npc: Entity;

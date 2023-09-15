@@ -8,6 +8,7 @@ export type Entity = {
   money: number;
   direction: number;
   movespeed: number;
+  image: string;
 
   talking?: boolean;
   inventory: {

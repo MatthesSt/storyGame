@@ -16,6 +16,7 @@ export const player = ref<Player>({
   direction: 0,
   movespeed: 3,
   talking: false,
+  image: "player/player_default_front.png",
   inventory: {
     size: 16,
     items: createInventoryWithItems([{ amount: 1, id: 1 }]),
@@ -49,15 +50,19 @@ function playerCommunication() {
 function playerMovement() {
   if (isPressed("ArrowUp")) {
     movePlayer(0, -1);
+    player.value.image = "player/player_default_back.png";
   }
   if (isPressed("ArrowDown")) {
     movePlayer(0, 1);
+    player.value.image = "player/player_default_front.png";
   }
   if (isPressed("ArrowLeft")) {
     movePlayer(-1, 0);
+    player.value.image = "player/player_default_left.png";
   }
   if (isPressed("ArrowRight")) {
     movePlayer(1, 0);
+    player.value.image = "player/player_default_right.png";
   }
 }
 function playerInventory() {

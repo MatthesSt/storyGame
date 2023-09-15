@@ -26,6 +26,11 @@ function sellToMerchant(item: InvetorySlot) {
     </div>
     <div class="inventoryFooter">Gold: {{ player?.money }}</div>
   </div>
+  <div class="playerEquipment">
+    <div class="equipment" v-for="item in player.equipment">
+      <img v-if="item" :src="item.image" :alt="item.name" />
+    </div>
+  </div>
   <div class="npcInventory" v-if="closeNpc?.inventory.openend">
     <div class="tile" v-for="item in npcInventory">
       <template v-if="item.id != 0">
@@ -53,6 +58,26 @@ function sellToMerchant(item: InvetorySlot) {
   transform: translateX(100%);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+}
+.playerEquipment {
+  width: calc($tileSize * 4);
+  height: calc($tileSize * 4);
+  position: absolute;
+  background-color: rgb(240, 184, 30);
+  right: 0;
+  bottom: 0;
+  transform: translateX(100%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.equipment {
+  width: calc($tileSize * 4 / 3);
+  height: calc($tileSize * 4 / 3);
+  border: 1px solid #855e16;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 .tile {
   width: $tileSize;

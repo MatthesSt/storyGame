@@ -25,6 +25,17 @@ export function entityFactory(options: Partial<Entity> = {}): Entity {
       size: 16,
       items: createInventoryWithItems([]),
     },
+    equipment: {
+      head: null,
+      body: null,
+      arms: null,
+      legs: null,
+      boots: null,
+      weapon: null,
+      shield: null,
+      tool: null,
+      accessory: null,
+    },
     ...options,
   };
 }

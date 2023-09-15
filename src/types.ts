@@ -17,6 +17,17 @@ export type Entity = {
     openend?: boolean;
     blockOpen?: boolean;
   };
+  equipment?: {
+    head?: Item | null;
+    body?: Item | null;
+    arms?: Item | null;
+    legs?: Item | null;
+    boots?: Item | null;
+    weapon?: Item | null;
+    shield?: Item | null;
+    tool?: Item | null;
+    accessory?: Item | null;
+  };
   currentDialog?: string;
   dialog?: Record<
     string,

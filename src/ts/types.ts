@@ -3,6 +3,8 @@ import { Tuple } from "./typehelpers";
 export type Entity = {
   id: number;
   name: string;
+  StartX: number,
+  StartY: number,
   x: number;
   y: number;
   height: number

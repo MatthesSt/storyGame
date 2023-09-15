@@ -59,3 +59,4 @@ main {
   align-items: center;
 }
 </style>
+./ts/area

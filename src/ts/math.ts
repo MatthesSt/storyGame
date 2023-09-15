@@ -13,3 +13,5 @@ export function getTileIndices(position: [number, number]): [number, number] {
 export function getTilePosition(position: [number, number]): [number, number] {
   return [position[0] * 40 - 20, position[1] * 40 - 20];
 }
+
+// export function 

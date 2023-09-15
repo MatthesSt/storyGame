@@ -11,27 +11,30 @@ export const enemies= ref<Entity[]>([
     y: 200,
     height: 12,
     width: 28,
-    movespeed: 1,
-    lookRadius:100,
+    movespeed: 0.1,
+    lookRadius:50,
     image: "enemy/bat.png",
   }),
 ]);
-
 
 const gameTicks = ref(0);
 const ticksPerSecond = 24;
 
 const playerInputInterval = setInterval(() => {
     gameTicks.value++;
-      if (gameTicks.value % 12 == 0) moveEnemy();
+      if (gameTicks.value % 2 == 0) moveEnemy();
   }, 1000 / ticksPerSecond);
-  
-
 
 export function moveEnemy() {
+if (!enemies) return
 let closeEnemies = enemies.value.filter((e)=> distanceCalculator(player.value.x, player.value.y, e.x, e.y)< e.lookRadius  )
- console.log("close enemies:",closeEnemies)
- 
+if (!closeEnemies.length) return
+console.log("close enemies:",closeEnemies)
+for (let e= 0;e<closeEnemies.length; e++ ){
+    closeEnemies[e].x += (player.value.x - closeEnemies[e].x) *closeEnemies[e].movespeed 
+    closeEnemies[e].y += (player.value.y - closeEnemies[e].y) *closeEnemies[e].movespeed
+
+}
 }
 
 function distanceCalculator(enemyTargetX:number, enemyTargetY:number, enemyX:number, enemyY:number ) {

@@ -9,7 +9,7 @@ export type Entity = {
   direction: number;
   movespeed: number;
 
-  talking?: boolean;
+  talking: boolean;
   inventory: {
     size: number;
     items: Tuple<InvetorySlot, 16>;

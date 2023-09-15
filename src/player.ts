@@ -1,26 +1,26 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { isPressed } from "./controls";
 import { getDistance, getTileIndices, getTilePosition } from "./math";
-import { Entity, Item, InvetorySlot, Player } from "./types";
+import { Entity, Player } from "./types";
 import { npcs } from "./npcs";
 import { currentArea, areas } from "./area";
 import { items } from "./items";
-import { createInventoryWithItems } from "./utils";
+import { createInventoryWithItems, entityFactory } from "./utils";
 
-export const player = ref<Player>({
-  id: 0,
-  name: "Player",
-  x: 160,
-  y: 160,
-  money: 100,
-  direction: 0,
-  movespeed: 3,
-  talking: false,
-  inventory: {
-    size: 16,
-    items: createInventoryWithItems([{ amount: 1, id: 1 }]),
-  },
-});
+export const player = ref<Player>(
+  entityFactory({
+    id: 0,
+    name: "Player",
+    x: 160,
+    y: 160,
+    money: 100,
+    movespeed: 3,
+    inventory: {
+      size: 16,
+      items: createInventoryWithItems([{ amount: 1, id: 1 }]),
+    },
+  })
+);
 
 const gameTicks = ref(0);
 const ticksPerSecond = 24;

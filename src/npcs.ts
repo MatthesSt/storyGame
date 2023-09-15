@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { Entity, InvetorySlot } from "./types";
-import { createInventoryWithItems } from "./utils";
+import { createInventoryWithItems, entityFactory } from "./utils";
 import { Tuple } from "./typehelpers";
 
 export const npcInventory = ref<Tuple<InvetorySlot, 16>>(
@@ -8,18 +8,12 @@ export const npcInventory = ref<Tuple<InvetorySlot, 16>>(
 );
 
 export const npcs = ref<Entity[]>([
-  {
+  entityFactory({
     id: 1,
     name: "NPC",
     x: 160,
-    money: 10,
-    inventory: {
-      size: 16,
-      items: createInventoryWithItems([]),
-    },
     y: 160,
-    direction: 0,
-    movespeed: 0,
+    money: 10,
     dialog: {
       init: {
         text: "test",
@@ -44,17 +38,13 @@ export const npcs = ref<Entity[]>([
       },
     },
     currentDialog: "init",
-    talking: false,
-  },
-  {
+  }),
+  entityFactory({
     id: 2,
     name: "Merchant",
     x: 260,
-    direction: 0,
-    movespeed: 0,
     y: 260,
     money: 10,
-    talking: false,
     currentDialog: "init",
     inventory: {
       size: 16,
@@ -93,5 +83,5 @@ export const npcs = ref<Entity[]>([
         ],
       },
     },
-  },
+  }),
 ]);

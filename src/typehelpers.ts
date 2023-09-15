@@ -3,6 +3,7 @@ export type Tuple<T, N extends number> = N extends N
     ? T[]
     : _TupleOf<T, N, []>
   : never;
+
 export type _TupleOf<
   T,
   N extends number,

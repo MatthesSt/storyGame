@@ -13,7 +13,7 @@ function execute(
   if (answer.next) {
     npc.currentDialog = answer.next;
   } else {
-    npc.currentDialog = "";
+    npc.currentDialog = "init";
     npc.talking = false;
     player.value.talking = false;
   }
@@ -22,7 +22,7 @@ function execute(
 </script>
 
 <template>
-  <div class="communicationWrapper" v-if="npc.currentDialog">
+  <div class="communicationWrapper" v-if="npc.currentDialog && npc.talking">
     <div class="dialog">
       {{ npc.dialog?.[npc.currentDialog] }}
     </div>

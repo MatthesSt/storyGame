@@ -1,49 +1,43 @@
 <script setup lang="ts">
-import { Entity } from "../types";
+import { Entity, InvetorySlot } from "../types";
 import { items } from "../items";
 import { npcInventory } from "../npcs";
 import { buyItem, closeNpc, sellItem } from "../player";
-import { toRefs } from "vue";
 
-const props = defineProps<{
+defineProps<{
   player: Entity;
 }>();
-const { player } = toRefs(props);
 
-function sellToMerchant(n: number) {
+function sellToMerchant(item: InvetorySlot) {
   if (!closeNpc.value) return;
-  sellItem(player.value.inventory.items[n - 1]?.id, closeNpc.value.id);
+  sellItem(item.id, closeNpc.value.id);
 }
 </script>
 <template>
   <div class="playerInventory" v-if="player.inventory.openend">
-    <div class="tile" v-for="n in player.inventory.size">
-      <button @click.stop="sellToMerchant(n)" class="selectableItem">
-        <img
-          v-if="items[player.inventory.items[n - 1]?.id]?.image"
-          :src="items[player.inventory.items[n - 1]?.id]?.image"
-        />
-        <span v-else>
-          {{ items[player.inventory.items[n - 1]?.id]?.name }}</span
-        >
-      </button>
-      <span class="amount">{{ player.inventory.items[n - 1]?.amount }}</span>
+    <div class="tile" v-for="item in player.inventory.items">
+      <template v-if="item.id != 0">
+        <button @click.stop="sellToMerchant(item)" class="selectableItem">
+          <img v-if="items[item.id]?.image" :src="items[item.id]?.image" />
+          <span v-else> {{ items[item.id]?.name }}</span>
+        </button>
+        <span class="amount">{{ item.amount }}</span>
+      </template>
     </div>
     <div class="inventoryFooter">Gold: {{ player?.money }}</div>
   </div>
   <div class="npcInventory" v-if="closeNpc?.inventory.openend">
-    <div class="tile" v-for="n in 16">
-      <button
-        @click.stop="buyItem(npcInventory[n - 1].id, closeNpc.id)"
-        class="selectableItem"
-      >
-        <img
-          v-if="items[npcInventory[n - 1]?.id]?.image"
-          :src="items[npcInventory[n - 1]?.id]?.image"
-        />
-        <span v-else> {{ items[npcInventory[n - 1]?.id]?.name }}</span>
-      </button>
-      <span class="amount">{{ npcInventory[n - 1]?.amount }}</span>
+    <div class="tile" v-for="item in npcInventory">
+      <template v-if="item.id != 0">
+        <button
+          @click.stop="buyItem(item.id, closeNpc.id)"
+          class="selectableItem"
+        >
+          <img v-if="items[item.id]?.image" :src="items[item.id]?.image" />
+          <span v-else> {{ items[item.id]?.name }}</span>
+        </button>
+        <span class="amount">{{ item.amount }}</span>
+      </template>
     </div>
   </div>
 </template>
@@ -103,5 +97,7 @@ function sellToMerchant(n: number) {
   height: min-content;
   background-color: transparent;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
 }
 </style>

@@ -100,18 +100,17 @@ export function movePlayer(dx: number, dy: number) {
     player.value.direction = dx > 0 ? 90 : dx < 270 ? 0 : dy > 0 ? 180 : 0;
   }
 }
-export const closeNpc = computed(() =>
-  npcs.value.find((npc) => getDistance(npc, player.value) < 65)
-);
+export const closeNpc = computed(() => {
+  return npcs.value
+    .filter((n) => areas.value[currentArea.value].npcs.find((e) => e == n.id))
+    .find((npc) => getDistance(npc, player.value) < 65);
+});
 
 export function buyItem(itemId: number, merchantId: number) {
   if (player.value.money < items[itemId].value) return;
 
-  let playerItem = player.value.inventory.items.find((i) => i.id == itemId);
-
   if (!hasFreeInventorySpace(player.value.inventory, itemId)) return;
-  console.log("has free inventory space");
-  giveItemToEntity(player.value, playerItem, itemId);
+  giveItemToEntity(player.value, itemId);
   player.value.money -= items[itemId].value;
 
   const item = npcs.value
@@ -124,50 +123,43 @@ export function buyItem(itemId: number, merchantId: number) {
 
 export function sellItem(itemId: number, merchantId: number) {
   let playerItem = player.value.inventory.items.find((i) => i.id == itemId);
+
   if (!playerItem) return;
 
   const merchant = npcs.value.find((n) => n.id == merchantId)!;
-  const item = merchant?.inventory.items.find((i) => i.id == itemId);
+  console.log(merchant);
 
   if (!hasFreeInventorySpace(merchant.inventory, itemId)) return;
-  console.log("has free inventory space");
-
+  console.log(1);
   takeItemFromEntity(player.value, playerItem);
   player.value.money += items[itemId].value;
 
-  giveItemToEntity(merchant, item, itemId);
+  giveItemToEntity(merchant, itemId);
 }
 
 function takeItemFromEntity(entity: Entity, item: InvetorySlot) {
   item.amount--;
   if (item.amount <= 0) {
-    entity.inventory.items.splice(entity.inventory.items.indexOf(item), 1);
+    entity.inventory.items.find((i) => i.id == item.id)!.id = 0;
   }
 }
 
-function giveItemToEntity(
-  entity: Entity,
-  playerItem: InvetorySlot | undefined,
-  itemId: number
-) {
-  if (!playerItem) {
-    playerItem = {
+function giveItemToEntity(entity: Entity, itemId: number) {
+  let item = entity.inventory.items.find((i) => i.id == itemId);
+  if (!item || item.amount >= items[itemId].maxStack!) {
+    const freeSlotIndex = entity.inventory.items.findIndex((i) => i.id == 0);
+    entity.inventory.items[freeSlotIndex] = {
       amount: 1,
       id: itemId,
     };
-    entity.inventory.items.push(playerItem);
-  } else {
-    if (playerItem.amount >= items[itemId].maxStack!) {
-      entity.inventory.items.push({ ...playerItem, amount: 1 });
-    } else {
-      playerItem.amount++;
-    }
+  } else if (item.amount < items[itemId].maxStack!) {
+    item.amount++;
   }
 }
 
 function hasFreeInventorySpace(inventory: Entity["inventory"], itemId: number) {
   return (
-    inventory.items.length < inventory.size ||
+    inventory.items.find((i) => i.id == 0) ||
     inventory.items.find((i) => i.id == itemId)?.amount! <
       items[itemId].maxStack!
   );

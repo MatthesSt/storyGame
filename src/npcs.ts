@@ -13,6 +13,10 @@ export const npcs = ref<Entity[]>([
     name: "NPC",
     x: 160,
     y: 160,
+    inventory: {
+      size: 16,
+      items: createInventoryWithItems([]),
+    },
     money: 10,
     dialog: {
       init: {
@@ -44,6 +48,7 @@ export const npcs = ref<Entity[]>([
     name: "Merchant",
     x: 260,
     y: 260,
+    image: "npc/Merchant.png",
     money: 10,
     currentDialog: "init",
     inventory: {

@@ -16,6 +16,7 @@ export function entityFactory(options: Partial<Entity> = {}): Entity {
     name: "",
     x: 0,
     y: 0,
+    image: "",
     direction: 0,
     movespeed: 0,
     money: 0,

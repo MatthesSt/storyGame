@@ -13,7 +13,11 @@ const { area } = toRefs(props);
     :style="`grid-template-columns:repeat(${area.width},1fr)`"
   >
     <div v-for="x in area.width">
-      <div v-for="y in area.height" class="tile"></div>
+      <div
+        v-for="y in area.height"
+        class="tile"
+        :style="`background-image: url(${area.floorImage})`"
+      ></div>
     </div>
     <div
       v-for="portal in area.portals"
@@ -34,7 +38,6 @@ const { area } = toRefs(props);
 .tile {
   width: $tileSize;
   height: $tileSize;
-  border: 1px solid #aaa;
   background-color: white;
 }
 .portal {

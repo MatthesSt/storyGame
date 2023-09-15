@@ -12,8 +12,13 @@ const { player } = toRefs(props);
     class="player"
     :class="canTalk && player.dialog ? 'canTalk' : ''"
     :data-name="player.name"
-    :style="`top:${player.y}px;left:${player.x}px;background-color:${
-      player.talking ? 'red' : 'black'
+    :style="`
+    top:${player.y}px;
+    left:${player.x}px;
+    ${
+      player.image
+        ? 'background-image:url(' + player.image + ')'
+        : 'background-color:' + (player.talking ? 'red' : 'black')
     }`"
   ></div>
 </template>
@@ -24,9 +29,11 @@ $size: calc(#{$tileSize} * #{$ration});
 .player {
   width: $size;
   height: $size;
+  background-repeat: no-repeat;
+  background-size: cover;
   position: absolute;
   transform: translate(-50%, -50%);
-  border-radius: 40%;
+  border-radius: 30%;
   &::before {
     content: attr(data-name);
     font-size: 14px;

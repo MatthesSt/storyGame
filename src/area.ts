@@ -12,6 +12,7 @@ export const areas = ref<
       width: number;
       height: number;
       npcs: number[];
+      floorImage: string;
       portals: {
         id: number;
         position: [number, number];
@@ -26,6 +27,7 @@ export const areas = ref<
     width: 15,
     height: 10,
     npcs: [1, 2],
+    floorImage: "environment/spawn_floor.png",
     portals: [
       {
         id: 1,
@@ -40,6 +42,7 @@ export const areas = ref<
     width: 15,
     height: 10,
     npcs: [],
+    floorImage: "environment/town_floor.png",
     portals: [
       {
         id: 1,

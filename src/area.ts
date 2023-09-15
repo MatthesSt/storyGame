@@ -27,7 +27,7 @@ export const areas = ref<
     width: 15,
     height: 10,
     npcs: [1, 2],
-    floorImage: "",
+    floorImage: "environment/spawn_floor.png",
     portals: [
       {
         id: 1,

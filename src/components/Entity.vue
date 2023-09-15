@@ -2,23 +2,23 @@
 import { toRefs } from "vue";
 import { Entity } from "../types";
 const props = defineProps<{
-  player: Entity;
+  entity: Entity;
   canTalk?: boolean;
 }>();
-const { player } = toRefs(props);
+const { entity } = toRefs(props);
 </script>
 <template>
   <div
-    class="player"
-    :class="canTalk && player.dialog ? 'canTalk' : ''"
-    :data-name="player.name"
+    class="entity"
+    :class="canTalk && entity.dialog ? 'canTalk' : ''"
+    :data-name="entity.name"
     :style="`
-    top:${player.y}px;
-    left:${player.x}px;
+    top:${entity.y}px;
+    left:${entity.x}px;
     ${
-      player.image
-        ? 'background-image:url(' + player.image + ')'
-        : 'background-color:' + (player.talking ? 'red' : 'black')
+      entity.image
+        ? 'background-image:url(' + entity.image + ')'
+        : 'background-color:' + (entity.talking ? 'red' : 'black')
     }`"
   ></div>
 </template>
@@ -26,7 +26,7 @@ const { player } = toRefs(props);
 @import "../style.scss";
 $ration: 0.8;
 $size: calc(#{$tileSize} * #{$ration});
-.player {
+.entity {
   width: $size;
   height: $size;
   background-repeat: no-repeat;

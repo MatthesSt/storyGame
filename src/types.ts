@@ -5,6 +5,8 @@ export type Entity = {
   name: string;
   x: number;
   y: number;
+  height: number
+  width: number;
   money: number;
   direction: number;
   movespeed: number;

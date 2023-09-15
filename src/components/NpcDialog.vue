@@ -15,6 +15,7 @@ function execute(
   } else {
     npc.currentDialog = "init";
     npc.talking = false;
+    npc.inventory.openend = false;
     player.value.talking = false;
   }
   if (answer.action) answer.action();

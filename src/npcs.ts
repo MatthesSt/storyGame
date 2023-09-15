@@ -12,7 +12,7 @@ export const npcs = ref<Entity[]>([
     id: 1,
     name: "NPC",
     x: 160,
-    money: 0,
+    money: 10,
     inventory: {
       size: 16,
       items: createInventoryWithItems([]),
@@ -53,7 +53,7 @@ export const npcs = ref<Entity[]>([
     direction: 0,
     movespeed: 0,
     y: 260,
-    money: 0,
+    money: 10,
     talking: false,
     currentDialog: "init",
     inventory: {

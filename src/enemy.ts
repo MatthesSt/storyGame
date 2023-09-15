@@ -3,14 +3,12 @@ import { Entity } from "./types";
 import { ref } from "vue";
 
 export const enemies: Record<Entity["id"], Entity> = {
-  1: {
-    name: "bat",
+  1: entityFactory({
     id: 1,
-    category: "weapon",
-    description: "A stick",
-    maxStack: 10,
-    value: 1,
-    damage: 1,
-    image: "/item/wood_stick.png",
-  },
+    name: "bat",
+    x: 200,
+    y: 200,
+    movespeed: 1,
+    image: "enemy/bat.png",
+  }),
 };

@@ -24,17 +24,7 @@ export const player = ref<Player>(
       size: 16,
       items: createInventoryWithItems([{ amount: 1, id: 1 }]),
     },
-    equipment: createEquipmentWithItems({
-      head: items[1],
-      body: items[1],
-      legs: items[1],
-      shield: items[1],
-      arms: items[1],
-      boots: items[1],
-      weapon: items[1],
-      tool: items[1],
-      accessory: items[1],
-    }),
+    equipment: createEquipmentWithItems(),
   })
 );
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Entity, InvetorySlot, ItemCategory } from "../types";
+import { Entity, ItemCategory } from "../types";
 import { items } from "../items";
 import { npcInventory } from "../npcs";
 import {
@@ -70,7 +70,7 @@ function dropAtInventory() {
 </script>
 <template>
   <section class="playerInventory" v-if="player.inventory.openend">
-    <div class="tile" v-for="(item, index) in player.inventory.items">
+    <div class="tile" v-for="item in player.inventory.items">
       <img
         :draggable="!!item.id"
         style="height: 100%; width: 100%; object-fit: contain"

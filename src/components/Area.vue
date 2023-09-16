@@ -29,8 +29,8 @@ const { area } = toRefs(props);
       }"
     ></div>
     <slot name="player"></slot>
-
-    <slot name="enemy"></slot>
+    <slot name="npcs"></slot>
+    <slot name="enemies"></slot>
     <slot name="dialog"></slot>
     <slot name="inventory"></slot>
   </div>
@@ -49,4 +49,3 @@ const { area } = toRefs(props);
   position: absolute;
 }
 </style>
-../ts/area

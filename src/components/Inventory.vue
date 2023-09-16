@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Entity, ItemCategory } from "../ts/types";
+import { Entity, EquipmentCategory, EQUIPMENT_CATEGORIES } from "../ts/types";
 import { items } from "../ts/items";
 import { npcInventory } from "../ts/npcs";
 import {
@@ -27,7 +27,7 @@ function dragFromInventory(itemId: number) {
   movingItem.value = { itemId, from: "inventory" };
 }
 
-function dragFromEquipment(key: ItemCategory) {
+function dragFromEquipment(key: EquipmentCategory) {
   if (!player.value.equipment) return;
   movingItem.value = {
     itemId: player.value.equipment[key]!.id,
@@ -46,7 +46,9 @@ function markAsDropzone(event: DragEvent, storage: "inventory" | "equipment") {
     (storage == "inventory" &&
       !hasFreeInventorySpace(player.value, movingItem.value.itemId)) ||
     (storage == "equipment" &&
-      player.value.equipment?.[items[movingItem.value.itemId].category])
+      player.value.equipment?.[
+        items[movingItem.value.itemId].category as EquipmentCategory
+      ])
   ) {
     return (event.dataTransfer!.dropEffect = "none");
   }
@@ -57,16 +59,30 @@ function markAsDropzone(event: DragEvent, storage: "inventory" | "equipment") {
 
 function dropAtEquipment() {
   if (!movingItem.value || !movingItem.value.itemId) return;
-  if (player.value.equipment?.[items[movingItem.value.itemId].category]) return;
-  player.value.equipment![items[movingItem.value.itemId].category] =
-    items[movingItem.value.itemId];
+  if (
+    !EQUIPMENT_CATEGORIES.find(
+      (e) => e == items[movingItem.value.itemId!].category
+    )
+  )
+    return;
+  if (
+    player.value.equipment?.[
+      items[movingItem.value.itemId].category as EquipmentCategory
+    ]
+  )
+    return;
+  player.value.equipment![
+    items[movingItem.value.itemId].category as EquipmentCategory
+  ] = items[movingItem.value.itemId];
 
   takeItemFromEntity(player.value, movingItem.value.itemId);
   movingItem.value = { itemId: null };
 }
 function dropAtInventory() {
   giveItemToEntity(player.value, movingItem.value.itemId!);
-  player.value.equipment![items[movingItem.value.itemId!].category] = null;
+  player.value.equipment![
+    items[movingItem.value.itemId!].category as EquipmentCategory
+  ] = null;
   movingItem.value = { itemId: null };
 }
 </script>
@@ -101,7 +117,7 @@ function dropAtInventory() {
         style="height: 100%; width: 100%; object-fit: contain"
         @dragover="markAsDropzone($event, 'equipment')"
         @drop="dropAtEquipment()"
-        @dragstart="dragFromEquipment(key as ItemCategory)"
+        @dragstart="dragFromEquipment(key as EquipmentCategory)"
         :draggable="!!item"
       />
     </div>

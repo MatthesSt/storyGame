@@ -38,7 +38,7 @@ export const items: Record<Item["id"], Item> = {
     description: "Clean pants made out of leather",
     maxStack: 1,
     value: 7,
-    defense: 2,
+    defence: 2,
     image: "/item/armor/leather_pants.png",
   },
 };

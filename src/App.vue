@@ -18,12 +18,14 @@ import { enemies } from "./ts/enemy";
         {{ player.x }}, {{ player.y }},{{
           getTileIndices([player.x, player.y])
         }}
-        </span>
+      </span>
       <span>portal: {{ areas[currentArea].portals[0].position }}</span>
     </div>
     <Area :area="areas[currentArea]">
       <template #player>
         <Entity :entity="player"></Entity>
+      </template>
+      <template #npcs>
         <Entity
           v-for="npc in npcs.filter((e) =>
             areas[currentArea].npcs.find((n) => n == e.id)
@@ -31,10 +33,12 @@ import { enemies } from "./ts/enemy";
           :entity="npc"
           :canTalk="npc.id == closeNpc?.id"
         ></Entity>
+      </template>
+      <template #enemies>
         <Entity
           v-for="enemy in enemies.filter((e:any) =>
-            areas[currentArea].enemies?.find((n) => n == e.id)
-          )"
+              areas[currentArea].enemies?.find((n) => n == e.id)
+            )"
           :entity="enemy"
           :style="`width: ${enemy.width}px; height: ${enemy.height}px`"
         ></Entity>
@@ -59,4 +63,3 @@ main {
   align-items: center;
 }
 </style>
-./ts/area

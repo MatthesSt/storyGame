@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { toRefs } from "vue";
 import { Entity } from "../ts/types";
-const props = defineProps<{
+defineProps<{
   entity: Entity;
   canTalk?: boolean;
 }>();
-const { entity } = toRefs(props);
 </script>
 <template>
   <div

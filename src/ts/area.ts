@@ -43,7 +43,7 @@ export const areas = ref<
     width: 15,
     height: 10,
     npcs: [],
-    enemies: [1],
+    enemies: [1, 2],
     floorImage: "environment/town_floor.png",
     portals: [
       {

@@ -7,28 +7,24 @@ import { getDistance, getVector } from "./math";
 
 export const enemies= ref<Entity[]>([
    entityFactory({
-    id: 0,
+    id: 1,
     name: "bat",
-    StartX: 200,
-    StartY: 200,
     x: 200,
     y: 200,
     height: 12,
     width: 28,
-    movespeed: 4, //schnell genug zum sehen aber langsam genug zum weglaufen können
+    movespeed: 4, 
     lookRadius:100,
     image: "enemy/bat.png",
   }),
   entityFactory({
-    id: 1,
+    id: 2,
     name: "slime",
-    StartX: 220,
-    StartY: 220,
-    x: 220,
+    x: 320,
     y: 220,
     height: 28,
     width: 26,
-    movespeed: 2, //schnell genug zum sehen aber langsam genug zum weglaufen können
+    movespeed: 2, 
     lookRadius:75,
     image: "enemy/slime.png",
   })

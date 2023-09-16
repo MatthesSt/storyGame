@@ -27,7 +27,6 @@ const { entity } = toRefs(props);
       width:${entity.currentHealth*150/ entity.maxHealth}%;
       height: 5px;      
       `">
-  
   </template>
   </div>
 </template>

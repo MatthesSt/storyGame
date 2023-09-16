@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Area from "./components/Area.vue";
 import Entity from "./components/Entity.vue";
-// import Enemy from "./components/Enemy.vue";
+import Stats from "./components/Stats.vue";
 import NpcDialog from "./components/NpcDialog.vue";
 import Inventory from "./components/Inventory.vue";
 import { areas, currentArea } from "./ts/area";
@@ -45,10 +45,8 @@ import { enemies } from "./ts/enemy";
       <template #inventory>
         <Inventory :player="player" />
       </template>
-      <!-- <template #stats>
-        <Stats :player="player" />
-      </template> -->
     </Area>
+        <Stats></Stats>
   </main>
 </template>
 

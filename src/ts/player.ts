@@ -17,6 +17,8 @@ export const player = ref<Player>(
     id: 0,
     type: 'player',
     name: "Player",
+    maxHealth:50,
+    currentHealth:25,
     x: 160,
     y: 160,
     money: 100,

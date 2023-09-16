@@ -26,6 +26,8 @@ export type Entity = {
   image: string;
   lookRadius: number;
   talking: boolean;
+  attacking?: boolean;
+  blocking?: boolean;
   inventory: {
     size: number;
     items: Tuple<InvetorySlot, 16>;
@@ -73,6 +75,7 @@ export type Item = {
   value: number;
   damage?: number;
   defense?: number;
+  useSpeed?: number;
   heal?: number;
   range?: number;
   onUse?: () => void;

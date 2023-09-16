@@ -9,6 +9,7 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 10,
     value: 1,
     damage: 1,
+    useSpeed: 10,
     image: "/item/weapon/wood_stick.png",
   },
   2: {
@@ -19,6 +20,7 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 1,
     value: 5,
     damage: 5,
+    useSpeed: 4,
     image: "/item/weapon/wood_sword.png",
   },
   3: {
@@ -29,6 +31,7 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 5,
     value: 5,
     damage: 6,
+    useSpeed: 4,
     image: "/item/weapon/wood_dagger.png",
   },
   4: {

@@ -10,6 +10,7 @@ import {
   entityFactory,
   createEquipmentWithItems,
 } from "./utils";
+import { entityAttack } from "./combat";
 
 export const player = ref<Player>(
   entityFactory({
@@ -20,6 +21,7 @@ export const player = ref<Player>(
     money: 100,
     movespeed: 3,
     image: "player/player_default_front.png",
+    
     inventory: {
       size: 16,
       items: createInventoryWithItems([{ amount: 1, id: 1 }]),
@@ -28,13 +30,14 @@ export const player = ref<Player>(
   })
 );
 
-const gameTicks = ref(0);
+export const gameTicks = ref(0);
 const ticksPerSecond = 24;
 
 const playerInputInterval = setInterval(() => {
   gameTicks.value++;
   if (!player.value.talking) {
     playerMovement();
+    entityAttack(player.value)
     if (gameTicks.value % 12 == 0) checkPortals();
   }
   playerCommunication();

@@ -30,7 +30,8 @@ export type Entity = {
   id: number;
   type:EntityCategory
   name: string;
-  health: number;
+  maxHealth: number;
+  currentHealth: number;
   x: number;
   y: number;
   height: number;

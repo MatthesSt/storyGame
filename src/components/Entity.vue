@@ -21,10 +21,14 @@ const { entity } = toRefs(props);
         : 'background-color:' + (entity.talking ? 'red' : 'black')
     }`"
   >
-  <div v-if="entity.type =='enemy'">  
-      <img class="emptyHealth" src="/emptyHealth.png" style="position: absolute; top: -10px;">
-      <img class="fullHealth" src="/fullHealth.png" style="position: absolute;top: -10px; ">
-    </div>
+  <template v-if="entity.type =='enemy'">  
+      <img class="emptyHealth" src="/emptyHealth.png" style="position: absolute; top:-10px;left:60%;transform:translateX(-50%)">
+      <img class="fullHealth" src="/fullHealth.png" style="position: absolute;top:-10px;left:60%;transform:translateX(-50%)" :style="`
+      width:${entity.currentHealth*150/ entity.maxHealth}%;
+      height: 5px;      
+      `">
+  
+  </template>
   </div>
 </template>
 <style scoped lang="scss">
@@ -43,7 +47,7 @@ $size: calc(#{$tileSize} * #{$ration});
     content: attr(data-name);
     top: -10px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     position: absolute;
     transform: translateY(-100%) translateX(calc($size / 2)) translateX(-50%);
   }

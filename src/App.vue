@@ -45,6 +45,9 @@ import { enemies } from "./ts/enemy";
       <template #inventory>
         <Inventory :player="player" />
       </template>
+      <!-- <template #stats>
+        <Stats :player="player" />
+      </template> -->
     </Area>
   </main>
 </template>

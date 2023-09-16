@@ -39,6 +39,8 @@ function markAsDropzone(event: DragEvent, storage: "inventory" | "equipment") {
   if (!movingItem.value || !movingItem.value.itemId) {
     return (event.dataTransfer!.dropEffect = "none");
   }
+  if (movingItem.value.from == storage)
+    return (event.dataTransfer!.dropEffect = "none");
   //no space in inventory/equipment
   if (
     (storage == "inventory" &&

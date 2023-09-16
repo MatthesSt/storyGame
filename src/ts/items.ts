@@ -9,7 +9,7 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 10,
     value: 1,
     damage: 1,
-    image: "/item/wood_stick.png",
+    image: "/item/weapon/wood_stick.png",
   },
   2: {
     name: "Wood Sword",
@@ -19,7 +19,7 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 1,
     value: 5,
     damage: 5,
-    image: "/item/wood_sword.png",
+    image: "/item/weapon/wood_sword.png",
   },
   3: {
     name: "Wood Dagger",
@@ -29,6 +29,16 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 5,
     value: 5,
     damage: 6,
-    image: "/item/wood_dagger.png",
+    image: "/item/weapon/wood_dagger.png",
+  },
+  4: {
+    name: "Leather Pants",
+    id: 4,
+    category: "armor",
+    description: "Clean pants made out of leather",
+    maxStack: 1,
+    value: 7,
+    defense:2,
+    image: "/item/armor/leather_pants.png",
   },
 };

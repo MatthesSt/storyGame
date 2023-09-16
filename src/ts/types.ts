@@ -39,7 +39,7 @@ export type InvetorySlot = {
   id: number;
 };
 
-export const CATEGORIES = ["weapon", "consumable", "misc"] as const;
+export const CATEGORIES = ["weapon", "consumable", "misc", "armor"] as const;
 
 export type Item = {
   image: string;
@@ -50,6 +50,7 @@ export type Item = {
   maxStack?: number;
   value: number;
   damage?: number;
+  defense?: number
   heal?: number;
   range?: number;
   onUse?: () => void;

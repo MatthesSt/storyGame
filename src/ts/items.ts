@@ -1,6 +1,7 @@
 import type { Item } from "./types.ts";
 
 export const items: Record<Item["id"], Item> = {
+
   1: {
     name: "Stick",
     id: 1,
@@ -49,4 +50,33 @@ export const items: Record<Item["id"], Item> = {
     useSpeed: 0,
     image: "/item/armor/leather_pants.png",
   },
+  5: {
+    name: "Bat wing",
+    id: 5,
+    category: "weapon",
+    type: 'range',
+    description: "the wing of an bat",
+    maxStack: 1,
+    value: 0,
+    defense: 0,
+    useSpeed: 0,
+    damage:1,
+    image: "/item/weapon/bat_wing.png",
+  },
+  6: {
+    name: "Slime goo",
+    id: 6,
+    category: "weapon",
+    type: 'range',
+    description: "the wing of an bat",
+    maxStack: 1,
+    value: 0,
+    defense: 0,
+    useSpeed: 0,
+    damage:1,
+    image: "/item/weapon/bat_wing.png",
+  },
 };
+console.log(items)
+
+

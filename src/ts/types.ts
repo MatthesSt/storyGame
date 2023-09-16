@@ -20,7 +20,7 @@ export const ENTITY_CATEGORIES = [
 export const WEAPON_CATEGORIES = [
   "magic",
   "melee",
-  "bow",
+  "range",
 ] as const;
 export type ItemCategory = (typeof ITEM_CATEGORIES)[number];
 export type WeaponCategory = (typeof WEAPON_CATEGORIES)[number];

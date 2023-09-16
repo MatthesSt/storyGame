@@ -6,16 +6,27 @@ import { gameTicks, player } from "./player";
 import { Entity } from "./types";
 
 export function entityAttack(entity: Entity){
-if (entity.equipment?.weapon)
-
-if (!isPressed("f") ||canNotAttack(entity)) return
-let closeEnemies = enemies.value.filter((e)=> getDistance(player.value, e)< player.value.equipment?.weapon?.range  )
-player.value.attacking =true
-console.log("attack")
-
+    if (entity.type =="player") playerAttack()
 }
 
 function canNotAttack(entity: Entity){
-    if (!entity.equipment?.weapon?.useSpeed || !(gameTicks.value*24 % entity.equipment?.weapon?.useSpeed == 0) ||
-    entity.attacking|| entity.blocking || !entity.equipment?.weapon?.range) return false   
+     return (!entity.equipment?.weapon?.useSpeed||!(gameTicks.value*24 % entity.equipment?.weapon?.useSpeed == 0) ||
+    entity.attacking|| entity.blocking )  
 }
+
+export function playerAttack(){
+    if (!isPressed('f'))return
+    if (canNotAttack(player.value)) return
+    let closeEnemies = enemies.value.filter((e)=> getDistance(player.value, e)< player.value.equipment?.weapon?.range!)
+    if (player.value.equipment?.weapon?.type === 'melee') {meleeAtack(player.value, closeEnemies)
+    }
+}
+
+export function meleeAtack(atacker: Entity, targets:Entity[]){
+for (let enemy in targets) {
+    console.log(enemies.value[enemy])
+}
+}
+
+    // player.value.attacking =true
+    // console.log("attack")

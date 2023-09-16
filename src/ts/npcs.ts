@@ -11,6 +11,7 @@ export const npcs = ref<Entity[]>([
   entityFactory({
     id: 1,
     name: "NPC",
+    type: 'npc',
     x: 160,
     y: 160,
     money: 10,
@@ -42,6 +43,7 @@ export const npcs = ref<Entity[]>([
   entityFactory({
     id: 2,
     name: "Merchant",
+    type: 'npc',
     x: 260,
     y: 260,
     image: "npc/Merchant.png",

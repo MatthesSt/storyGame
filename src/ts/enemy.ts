@@ -11,6 +11,7 @@ export const enemies= ref<Entity[]>([
     name: "bat",
     x: 200,
     y: 200,
+    health: 20,
     height: 12,
     width: 28,
     movespeed: 4, 

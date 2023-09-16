@@ -31,7 +31,9 @@ export function entityFactory(options: Partial<Entity> = {}): Entity {
   return {
     id: entityCounter.value++,
     name: "",
+    type: "baseEntity",
     lookRadius:0,
+    health: 100,
     x: 0,
     y: 0,
     width:40,

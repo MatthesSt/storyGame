@@ -6,16 +6,19 @@ export const items: Record<Item["id"], Item> = {
     id: 1,
     category: "weapon",
     description: "A stick",
+    type: "melee",
     maxStack: 10,
     value: 1,
     damage: 1,
     useSpeed: 10,
+    range:40,//px
     image: "/item/weapon/wood_stick.png",
   },
   2: {
     name: "Wood Sword",
     id: 2,
     category: "weapon",
+    type: "melee",
     description: "A sword that was probaply used for training",
     maxStack: 1,
     value: 5,
@@ -26,6 +29,7 @@ export const items: Record<Item["id"], Item> = {
   3: {
     name: "Wood Dagger",
     id: 3,
+    type: "melee",
     category: "weapon",
     description: "Looks like a Dagger made out of Wood",
     maxStack: 5,
@@ -42,6 +46,7 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 1,
     value: 7,
     defense: 2,
+    useSpeed: 0,
     image: "/item/armor/leather_pants.png",
   },
 };

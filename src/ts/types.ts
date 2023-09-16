@@ -1,6 +1,6 @@
 import { Tuple } from "./typehelpers";
 
-export const CATEGORIES = [
+export const ITEM_CATEGORIES = [
   "head",
   "body",
   "arms",
@@ -11,11 +11,26 @@ export const CATEGORIES = [
   "tool",
   "accessory",
 ] as const;
-export type ItemCategory = (typeof CATEGORIES)[number];
+export const ENTITY_CATEGORIES = [
+  "npc",
+  "player",
+  "enemy",
+  "baseEntity",
+] as const;
+export const WEAPON_CATEGORIES = [
+  "magic",
+  "melee",
+  "bow",
+] as const;
+export type ItemCategory = (typeof ITEM_CATEGORIES)[number];
+export type WeaponCategory = (typeof WEAPON_CATEGORIES)[number];
+export type EntityCategory = (typeof ENTITY_CATEGORIES)[number];
 
 export type Entity = {
   id: number;
+  type:EntityCategory
   name: string;
+  health: number;
   x: number;
   y: number;
   height: number;
@@ -70,6 +85,7 @@ export type Item = {
   name: string;
   id: number;
   category: ItemCategory;
+  type?: WeaponCategory;
   description?: string;
   maxStack?: number;
   value: number;

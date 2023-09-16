@@ -15,6 +15,7 @@ import { entityAttack } from "./combat";
 export const player = ref<Player>(
   entityFactory({
     id: 0,
+    type: 'player',
     name: "Player",
     x: 160,
     y: 160,

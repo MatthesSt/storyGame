@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Area from "./components/Area.vue";
 import Entity from "./components/Entity.vue";
-import Enemy from "./components/Enemy.vue";
+// import Enemy from "./components/Enemy.vue";
 import NpcDialog from "./components/NpcDialog.vue";
 import Inventory from "./components/Inventory.vue";
 import { areas, currentArea } from "./ts/area";

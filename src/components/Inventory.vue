@@ -18,66 +18,71 @@ defineProps<{
 }>();
 
 const movingItem = ref<{
-  item: InvetorySlot | null;
+  itemId: number | null;
   from?: "inventory" | "equipment";
-}>({ item: null });
+}>({ itemId: null });
 
-function dragFromInventory(item: InvetorySlot) {
-  movingItem.value = { item, from: "inventory" };
+function dragFromInventory(itemId: number) {
+  if (itemId == 0) return;
+  movingItem.value = { itemId, from: "inventory" };
 }
+
 function dragFromEquipment(key: ItemCategory) {
   if (!player.value.equipment) return;
   movingItem.value = {
-    item: { id: player.value.equipment[key]!.id, amount: 1 },
+    itemId: player.value.equipment[key]!.id,
     from: "equipment",
   };
 }
-function dragOver(storage: "inventory" | "equipment", event: DragEvent) {
-  if (!movingItem.value || storage == movingItem.value.from) {
-    event.dataTransfer!.dropEffect = "none";
-  } else event.dataTransfer!.dropEffect = "move";
+function markAsDropzone(event: DragEvent, storage: "inventory" | "equipment") {
+  //no item to move
+  if (!movingItem.value || !movingItem.value.itemId) {
+    return (event.dataTransfer!.dropEffect = "none");
+  }
+  //no space in inventory/equipment
+  if (
+    (storage == "inventory" &&
+      !hasFreeInventorySpace(player.value, movingItem.value.itemId)) ||
+    (storage == "equipment" &&
+      player.value.equipment?.[items[movingItem.value.itemId].category])
+  ) {
+    return (event.dataTransfer!.dropEffect = "none");
+  }
+  //moveable
+  event.dataTransfer!.dropEffect = "move";
+  event.preventDefault();
 }
 
-function dropAtEquipment(key: ItemCategory) {
-  if (!movingItem.value || !movingItem.value.item) return;
-  if (items[movingItem.value.item.id].category != key) return;
-  if (player.value.equipment?.[key]) return;
-  player.value.equipment![key] = items[movingItem.value.item.id];
+function dropAtEquipment() {
+  if (!movingItem.value || !movingItem.value.itemId) return;
+  if (player.value.equipment?.[items[movingItem.value.itemId].category]) return;
+  player.value.equipment![items[movingItem.value.itemId].category] =
+    items[movingItem.value.itemId];
 
-  takeItemFromEntity(player.value, movingItem.value.item.id);
+  takeItemFromEntity(player.value, movingItem.value.itemId);
+  movingItem.value = { itemId: null };
 }
-function dropAtInventory(key: ItemCategory) {
-  if (!movingItem.value || !movingItem.value.item) return;
-  const playerItem = player.value.equipment![key];
-  if (!player.value.equipment || !playerItem) return;
-  if (!hasFreeInventorySpace(player.value, playerItem.id)) return;
-  giveItemToEntity(player.value, playerItem.id);
-  player.value.equipment![key] = null;
-  movingItem.value.item = null;
+function dropAtInventory() {
+  giveItemToEntity(player.value, movingItem.value.itemId!);
+  player.value.equipment![items[movingItem.value.itemId!].category] = null;
+  movingItem.value = { itemId: null };
 }
 </script>
 <template>
   <section class="playerInventory" v-if="player.inventory.openend">
-    <div class="tile" v-for="item in player.inventory.items">
-      <template v-if="item.id != 0">
-        <button
-          @click.stop="sellItem(item.id, closeNpc)"
-          class="selectableItem"
-        >
-          <img
-            draggable
-            @dragstart="dragFromInventory(item)"
-            @drop="
-              $event.preventDefault();
-              dropAtInventory(items[item.id].category as ItemCategory);
-            "
-            v-if="items[item.id]?.image"
-            :src="items[item.id]?.image"
-          />
-          <span v-else> {{ items[item.id]?.name }}</span>
-        </button>
-        <span class="amount">{{ item.amount }}</span>
-      </template>
+    <div class="tile" v-for="(item, index) in player.inventory.items">
+      <img
+        :draggable="!!item.id"
+        style="height: 100%; width: 100%; object-fit: contain"
+        :style="`cursor: ${item.id ? 'grab' : 'default'}`"
+        @dragstart="dragFromInventory(item.id)"
+        @dragover="markAsDropzone($event, 'inventory')"
+        @drop="dropAtInventory()"
+        :src="items[item.id]?.image || 'empty_bg.png'"
+        @click.stop="sellItem(item.id, closeNpc)"
+        class="selectableItem"
+      />
+      <span class="amount">{{ item.amount }}</span>
     </div>
     <div class="inventoryFooter">
       {{ player?.money }}
@@ -92,23 +97,22 @@ function dropAtInventory(key: ItemCategory) {
       <img
         :src="item?.image || `equipment_bg/${key}_bg.png`"
         style="height: 100%; width: 100%; object-fit: contain"
-        @dragover="$event.dataTransfer!.dropEffect = 'move'"
-        @drop="dropAtEquipment(key as ItemCategory)"
+        @dragover="markAsDropzone($event, 'equipment')"
+        @drop="dropAtEquipment()"
+        @dragstart="dragFromEquipment(key as ItemCategory)"
+        :draggable="!!item"
       />
     </div>
   </section>
   <section class="npcInventory" v-if="closeNpc?.inventory.openend">
     <div class="tile" v-for="item in npcInventory">
-      <template v-if="item.id != 0">
-        <button
-          @click.stop="buyItem(item.id, closeNpc.id)"
-          class="selectableItem"
-        >
-          <img v-if="items[item.id]?.image" :src="items[item.id]?.image" />
-          <span v-else> {{ items[item.id]?.name }}</span>
-        </button>
-        <span class="amount">{{ item.amount }}</span>
-      </template>
+      <img
+        style="height: 100%; width: 100%; object-fit: contain"
+        :style="`cursor: ${item.id ? 'pointer' : 'default'}`"
+        :src="items[item.id]?.image || 'empty_bg.png'"
+        @click.stop="buyItem(item.id, closeNpc.id)"
+      />
+      <span class="amount">{{ item.amount }}</span>
     </div>
   </section>
 </template>
@@ -184,14 +188,6 @@ function dropAtInventory(key: ItemCategory) {
   font-size: 0.65rem;
   font-weight: 500;
   z-index: 1;
-}
-.selectableItem {
-  border: none;
-  width: min-content;
-  height: min-content;
-  background-color: transparent;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
+  pointer-events: none;
 }
 </style>

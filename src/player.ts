@@ -117,6 +117,7 @@ export const closeNpc = computed(() => {
 });
 
 export function buyItem(itemId: number, merchantId: number) {
+  if (itemId == 0) return;
   if (!hasMoney(player.value, items[itemId].value)) return;
   if (!hasFreeInventorySpace(player.value, itemId)) return;
   if (!hasItem(npcs.value.find((n) => n.id == merchantId)!, itemId)) return;
@@ -130,7 +131,13 @@ export function buyItem(itemId: number, merchantId: number) {
 }
 
 export function sellItem(itemId: number, merchant: Entity | undefined) {
-  if (!merchant || !merchant.talking || !merchant.inventory.openend) return;
+  if (
+    itemId == 0 ||
+    !merchant ||
+    !merchant.talking ||
+    !merchant.inventory.openend
+  )
+    return;
   if (!hasItem(player.value, itemId)) return;
 
   if (!hasMoney(merchant, items[itemId].value)) return;

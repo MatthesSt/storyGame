@@ -4,7 +4,7 @@ import { createInventoryWithItems, entityFactory } from "./utils";
 import { Tuple } from "./typehelpers";
 
 export const npcInventory = ref<Tuple<InvetorySlot, 16>>(
-  createInventoryWithItems([])
+  createInventoryWithItems()
 );
 
 export const npcs = ref<Entity[]>([
@@ -13,10 +13,6 @@ export const npcs = ref<Entity[]>([
     name: "NPC",
     x: 160,
     y: 160,
-    inventory: {
-      size: 16,
-      items: createInventoryWithItems([]),
-    },
     money: 10,
     dialog: {
       init: {

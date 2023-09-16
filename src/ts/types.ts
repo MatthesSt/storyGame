@@ -1,11 +1,24 @@
 import { Tuple } from "./typehelpers";
 
+export const CATEGORIES = [
+  "head",
+  "body",
+  "arms",
+  "legs",
+  "boots",
+  "weapon",
+  "shield",
+  "tool",
+  "accessory",
+] as const;
+export type ItemCategory = (typeof CATEGORIES)[number];
+
 export type Entity = {
   id: number;
   name: string;
   x: number;
   y: number;
-  height: number
+  height: number;
   width: number;
   money: number;
   direction: number;
@@ -18,6 +31,17 @@ export type Entity = {
     items: Tuple<InvetorySlot, 16>;
     openend?: boolean;
     blockOpen?: boolean;
+  };
+  equipment?: {
+    head?: Item | null;
+    body?: Item | null;
+    arms?: Item | null;
+    legs?: Item | null;
+    boots?: Item | null;
+    weapon?: Item | null;
+    shield?: Item | null;
+    tool?: Item | null;
+    accessory?: Item | null;
   };
   currentDialog?: string;
   dialog?: Record<
@@ -39,18 +63,16 @@ export type InvetorySlot = {
   id: number;
 };
 
-export const CATEGORIES = ["weapon", "consumable", "misc", "armor"] as const;
-
 export type Item = {
   image: string;
   name: string;
   id: number;
-  category: (typeof CATEGORIES)[number];
+  category: ItemCategory;
   description?: string;
   maxStack?: number;
   value: number;
   damage?: number;
-  defense?: number
+  defense?: number;
   heal?: number;
   range?: number;
   onUse?: () => void;

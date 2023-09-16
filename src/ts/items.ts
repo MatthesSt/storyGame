@@ -34,11 +34,11 @@ export const items: Record<Item["id"], Item> = {
   4: {
     name: "Leather Pants",
     id: 4,
-    category: "armor",
+    category: "legs",
     description: "Clean pants made out of leather",
     maxStack: 1,
     value: 7,
-    defense:2,
+    defense: 2,
     image: "/item/armor/leather_pants.png",
   },
 };

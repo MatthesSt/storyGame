@@ -51,5 +51,6 @@ export type Item = {
   value: number;
   damage?: number;
   heal?: number;
+  range?: number;
   onUse?: () => void;
 };

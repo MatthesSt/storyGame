@@ -32,6 +32,8 @@ export type Entity = {
   name: string;
   maxHealth: number;
   currentHealth: number;
+  maxMana: number;
+  currentMana: number;
   x: number;
   y: number;
   height: number;

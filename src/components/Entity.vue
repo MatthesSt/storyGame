@@ -20,7 +20,16 @@ const { entity } = toRefs(props);
         ? 'background-image:url(' + entity.image + ')'
         : 'background-color:' + (entity.talking ? 'red' : 'black')
     }`"
-  ></div>
+  >
+  <!-- <div
+  class="entityHealth"
+ :data-name="entity.health"
+ :style="`
+    top:${entity.y}px;
+    left:${entity.x}px;
+  `"
+  ></div> -->
+  </div>
 </template>
 <style scoped lang="scss">
 @import "../style.scss";

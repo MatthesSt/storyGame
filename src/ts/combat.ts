@@ -16,17 +16,27 @@ function canNotAttack(entity: Entity){
 
 export function playerAttack(){
     if (!isPressed('f'))return
-    if (canNotAttack(player.value)) return
-    let closeEnemies = enemies.value.filter((e)=> getDistance(player.value, e)< player.value.equipment?.weapon?.range!)
-    if (player.value.equipment?.weapon?.type === 'melee') {meleeAtack(player.value, closeEnemies)
+    if (canNotAttack(player.value)) return  
+    if (!areas.value[currentArea.value].enemies) return
+    let closeEnemies = enemies.value.filter((n, index)=> areas.value[currentArea.value].enemies![index] === n.id).filter((e)=> getDistance(player.value, e)< player.value.equipment?.weapon?.range!)
+    if (player.value.equipment?.weapon?.type === 'melee') {
+        meleeAtack(player.value, closeEnemies)
     }
 }
 
 export function meleeAtack(atacker: Entity, targets:Entity[]){
+if (!atacker.equipment?.weapon?.damage) return
 for (let enemy in targets) {
-    console.log(enemies.value[enemy])
-}
+    enemies.value[enemy].health -= atacker.equipment?.weapon?.damage
+    if ( enemies.value[enemy].health===0){
+        areas.value[currentArea.value].enemies = areas.value[currentArea.value].enemies?.filter((e)=> e !== enemies.value[enemy].id)
+        }       
+    }
 }
 
+export function defeatEntity(entitiy: Entity){
+
+    
+}
     // player.value.attacking =true
     // console.log("attack")

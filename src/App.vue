@@ -34,7 +34,7 @@ import { enemies } from "./ts/enemy";
         <Entity
           v-for="enemy in enemies.filter((e:any) =>
             areas[currentArea].enemies?.find((n) => n == e.id)
-          )"
+          )" 
           :entity="enemy"
           :style="`width: ${enemy.width}px; height: ${enemy.height}px`"
         ></Entity>

@@ -34,9 +34,7 @@ for (let enemy in targets) {
     }
 }
 
-export function defeatEntity(entitiy: Entity){
-
-    
+export function defeatEntity(entitiy: Entity){   
 }
     // player.value.attacking =true
     // console.log("attack")

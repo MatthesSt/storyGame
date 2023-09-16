@@ -9,6 +9,7 @@ export const enemies= ref<Entity[]>([
    entityFactory({
     id: 1,
     name: "bat",
+    type:"enemy",
     x: 200,
     y: 200,
     health: 20,
@@ -21,6 +22,7 @@ export const enemies= ref<Entity[]>([
   entityFactory({
     id: 2,
     name: "slime",
+    type:"enemy",
     x: 320,
     y: 220,
     height: 28,

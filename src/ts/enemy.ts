@@ -4,7 +4,7 @@ import { ABILITY_CATEGORIES, Entity } from './types'
 import { ref } from 'vue'
 import { areas, currentArea } from './area'
 import { getDistance, getVector } from './math'
-import { enemyAttack, getEnemiesInArea } from './combat'
+import { performEnemyAttack, getEnemiesInArea } from './combat'
 
 export const enemies = ref<Entity[]>([
   entityFactory({
@@ -30,7 +30,6 @@ export const enemies = ref<Entity[]>([
     type: 'enemy',
     abilities: {
       range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
-
       melee: [ABILITY_CATEGORIES.attack.melee.bodySlam],
     },
     maxHealth: 20,
@@ -68,7 +67,7 @@ const ticksPerSecond = 24
 
 const enemyInterval = setInterval(() => {
   gameTicks.value++
-  enemyAttack()
+  performEnemyAttack()
   if (gameTicks.value % 2 == 0) moveEnemy()
 }, 1000 / ticksPerSecond)
 
@@ -76,7 +75,6 @@ export function moveEnemy() {
   for (let enemy of enemies.value) {
     if (!getEnemiesInArea().find((e) => e.id === enemy.id)) continue
     let closeEnemies = getEnemiesInArea().filter((e) => getDistance(player.value, e) < e.lookRadius)
-    console.log(closeEnemies)
     if (closeEnemies.length) {
       for (let enemy of closeEnemies) {
         enemy.x += getVector(enemy, player.value)[0] * enemy.movespeed

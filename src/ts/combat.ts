@@ -5,7 +5,7 @@ import { getDistance } from './math'
 import { gameTicks, player, ticksPerSecond } from './player'
 import { Entity } from './types'
 
-export function enemyAttack() {
+export function performEnemyAttack() {
   for (let enemy of enemies.value) {
     if (getEnemiesInArea().find((e) => e.id === enemy.id)) {
       if (enemy.abilities?.range?.length) enemyRangeAttack(enemy)
@@ -14,22 +14,22 @@ export function enemyAttack() {
   }
 }
 
-export function enemyMeleeAttack(entitiy: Entity) {
+export function enemyMeleeAttack(entity: Entity) {
   if (
-    entitiy.abilities?.melee![0].attackSpeed &&
-    (gameTicks.value % entitiy.abilities?.melee![0].attackSpeed) * ticksPerSecond === 0
+    entity.abilities?.melee![0].attackSpeed &&
+    (gameTicks.value % entity.abilities?.melee![0].attackSpeed) * ticksPerSecond === 0
   ) {
-    if (getDistance(entitiy, player.value) <= entitiy.lookRadius) dealDamageToPlayer(entitiy)
+    if (getDistance(entity, player.value) <= entity.lookRadius) dealDamageToPlayer(entity)
   }
 }
 
-export function enemyRangeAttack(entitiy: Entity) {
+export function enemyRangeAttack(entity: Entity) {
   if (
-    entitiy.abilities?.range![0].attackSpeed &&
-    (gameTicks.value % entitiy.abilities?.range![0].attackSpeed) * ticksPerSecond === 0
+    entity.abilities?.range![0].attackSpeed &&
+    (gameTicks.value % entity.abilities?.range![0].attackSpeed) * ticksPerSecond === 0
   ) {
-    if (getDistance(entitiy, player.value) <= entitiy.lookRadius) return
-    if (getDistance(entitiy, player.value) <= entitiy.lookRadius * 2) dealDamageToPlayer(entitiy) // [] weil es könten un zukunft mehr
+    if (getDistance(entity, player.value) <= entity.lookRadius) return
+    if (getDistance(entity, player.value) <= entity.lookRadius * 2) dealDamageToPlayer(entity) // [] weil es könten un zukunft mehr
   }
 }
 
@@ -38,7 +38,7 @@ export function dealDamageToPlayer(enemy: Entity) {
   if (enemy.abilities?.melee) enemy.abilities.melee.find((e) => (player.value.currentHealth -= e.damage))
 }
 
-export function playerAttack() {
+export function performPlayerAttack() {
   if (!isPressed('f')) return
   if (
     !player.value.equipment ||

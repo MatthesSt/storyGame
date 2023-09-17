@@ -15,6 +15,7 @@ export const ENTITY_CATEGORIES = [
   "npc",
   "player",
   "enemy",
+  undefined
 ] as const;
 export const WEAPON_CATEGORIES = [
   "magic",

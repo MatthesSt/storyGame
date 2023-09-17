@@ -12,7 +12,7 @@ export const enemies = ref<Entity[]>([
     name: 'bat',
     type: 'enemy',
     abilities: {
-      melee: [ABILITY_CATEGORIES.attack.melee.bite],
+      melee: [ABILITY_CATEGORIES.attack.melee.bite, ABILITY_CATEGORIES.attack.melee.bodySlam],
     },
     maxHealth: 10,
     currentHealth: 10,
@@ -30,6 +30,7 @@ export const enemies = ref<Entity[]>([
     type: 'enemy',
     abilities: {
       range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
+      melee: [ABILITY_CATEGORIES.attack.melee.bodySlam],
     },
     maxHealth: 20,
     currentHealth: 20,
@@ -47,6 +48,7 @@ export const enemies = ref<Entity[]>([
     type: 'enemy',
     abilities: {
       range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
+      melee: [ABILITY_CATEGORIES.attack.melee.bodySlam],
     },
     maxHealth: 50,
     currentHealth: 50,

@@ -7,17 +7,19 @@ import { Entity } from './types'
 
 export function enemyAttack() {
   for (let enemy of enemies.value) {
-    if (!getEnemiesInArea().find((e) => e.id === enemy.id)) return
-    if (getDistance(enemy, player.value) >= enemy.lookRadius) return
-    console.log('test')
+    if (getEnemiesInArea().find((e) => e.id === enemy.id)) {
+      if (enemy.abilities?.range?.length) enemyRangeAttack(enemy)
+      if (enemy.abilities?.melee?.length) enemyMeleeAttack(enemy)
+    }
   }
 }
 
 export function enemyMeleeAttack(entitiy: Entity) {
-  console.log(entitiy)
+  if (getDistance(entitiy, player.value) <= entitiy.lookRadius / 2) console.log('melee', entitiy)
 }
 export function enemyRangeAttack(entitiy: Entity) {
-  console.log(entitiy)
+  if (getDistance(entitiy, player.value) <= entitiy.lookRadius) return
+  if (getDistance(entitiy, player.value) <= entitiy.lookRadius * 2) console.log('range', entitiy)
 }
 
 export function playerAttack() {

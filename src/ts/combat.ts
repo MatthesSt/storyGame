@@ -24,12 +24,12 @@ export function CheckForEnemiesInArea(){
 }
 
 export function attackEntity(entity:Entity){
-if (entity.type==="player" && entity.equipment?.weapon?.range) dealDamage(player.value, getEnemiesInRange(entity))
+if (entity.type==="player" && entity.equipment?.weapon?.range && entity.equipment?.weapon?.damage) dealDamage(player.value, getEnemiesInRange(entity))
 }
 
 export function dealDamage(dealer:Entity,targets:Entity[]){
 for (let target of targets){
-     target.currentHealth -= 1
+     target.currentHealth -=  dealer.equipment?.weapon?.damage! //zuvor bereits gecheckt
     if (target.currentHealth===0) killEnemy(target)
     }
 }
@@ -41,7 +41,7 @@ enemies.value = enemies.value.filter((e)=>e.id !== enemy.id)
 
 
 export function getEnemiesInRange(entity:Entity){
-   return getEnemiesInArea().filter((e)=> getDistance(e,entity)< entity.equipment?.weapon?.range!)
+   return getEnemiesInArea().filter((e)=> getDistance(e,entity)< entity.equipment?.weapon?.range!) //zuvor bereits gecheckt
 }
 
 export function getEnemiesInArea(){

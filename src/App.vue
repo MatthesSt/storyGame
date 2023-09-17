@@ -9,7 +9,6 @@ import { player, closeNpc } from "./ts/player";
 import { npcs } from "./ts/npcs";
 import { getTileIndices } from "./ts/math";
 import { enemies } from "./ts/enemy";
-import { Entity } from "./ts/types";
 </script>
 
 <template>

@@ -30,6 +30,7 @@ export const enemies = ref<Entity[]>([
     type: 'enemy',
     abilities: {
       range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
+
       melee: [ABILITY_CATEGORIES.attack.melee.bodySlam],
     },
     maxHealth: 20,

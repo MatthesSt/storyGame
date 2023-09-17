@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 import { Tuple } from './typehelpers'
 import { ABILITY_CATEGORIES, Entity, InvetorySlot } from './types'
-import { attackEntity } from './combat'
 
 const entityCounter = ref(1)
 

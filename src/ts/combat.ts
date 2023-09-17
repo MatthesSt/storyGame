@@ -2,7 +2,7 @@ import { areas, currentArea } from './area'
 import { isPressed } from './controls'
 import { enemies } from './enemy'
 import { getDistance } from './math'
-import { gameTicks, player } from './player'
+import { gameTicks, player, ticksPerSecond } from './player'
 import { Entity } from './types'
 
 export function enemyAttack() {
@@ -15,11 +15,27 @@ export function enemyAttack() {
 }
 
 export function enemyMeleeAttack(entitiy: Entity) {
-  if (getDistance(entitiy, player.value) <= entitiy.lookRadius / 2) console.log('melee', entitiy)
+  if (
+    entitiy.abilities?.melee![0].attackSpeed &&
+    (gameTicks.value % entitiy.abilities?.melee![0].attackSpeed) * ticksPerSecond === 0
+  ) {
+    if (getDistance(entitiy, player.value) <= entitiy.lookRadius) dealDamageToPlayer(entitiy)
+  }
 }
+
 export function enemyRangeAttack(entitiy: Entity) {
-  if (getDistance(entitiy, player.value) <= entitiy.lookRadius) return
-  if (getDistance(entitiy, player.value) <= entitiy.lookRadius * 2) console.log('range', entitiy)
+  if (
+    entitiy.abilities?.range![0].attackSpeed &&
+    (gameTicks.value % entitiy.abilities?.range![0].attackSpeed) * ticksPerSecond === 0
+  ) {
+    if (getDistance(entitiy, player.value) <= entitiy.lookRadius) return
+    if (getDistance(entitiy, player.value) <= entitiy.lookRadius * 2) dealDamageToPlayer(entitiy) // [] weil es könten un zukunft mehr
+  }
+}
+
+export function dealDamageToPlayer(enemy: Entity) {
+  // TODO: nicht .find fürs erste sonden zufällig oder mit algo einen der melee atacken auswählen
+  if (enemy.abilities?.melee) enemy.abilities.melee.find((e) => (player.value.currentHealth -= e.damage))
 }
 
 export function playerAttack() {
@@ -35,7 +51,7 @@ export function playerAttack() {
   if (gameTicks.value % player.value.equipment.weapon.useSpeed !== 0) return
   if (player.value.attacking) return
   player.value.attacking = true
-  if (CheckForEnemiesInArea()) attackEntity(player.value)
+  if (CheckForEnemiesInArea()) attackEnemy()
   player.value.attacking = false
 }
 export function CheckForEnemiesInArea() {
@@ -43,12 +59,12 @@ export function CheckForEnemiesInArea() {
   else return false
 }
 
-export function attackEntity(entity: Entity) {
-  if (entity.type === 'player' && entity.equipment.weapon?.range && entity.equipment.weapon?.damage)
-    dealDamage(player.value, getEnemiesInRange(entity))
+export function attackEnemy() {
+  if (player.value.equipment.weapon?.range && player.value.equipment.weapon?.damage)
+    dealDamageToEnemy(player.value, getEnemiesInRange(player.value))
 }
 
-export function dealDamage(dealer: Entity, targets: Entity[]) {
+export function dealDamageToEnemy(dealer: Entity, targets: Entity[]) {
   for (let target of targets) {
     target.currentHealth -= dealer.equipment.weapon?.damage! //zuvor bereits gecheckt
     if (target.currentHealth === 0) killEnemy(target)

@@ -1,3 +1,4 @@
+import { ticksPerSecond } from './player'
 import { Tuple } from './typehelpers'
 
 export const EQUIPMENT_CATEGORIES = [
@@ -20,13 +21,13 @@ export const ABILITY_CATEGORIES = {
         id: 1,
         damage: 1,
         heal: 1,
-        attackSpeed: 1,
+        attackSpeed: 10,
       },
       bodySlam: {
         id: 2,
         damage: 1,
         heal: 0,
-        attackSpeed: 1,
+        attackSpeed: 10,
       },
     },
     range: {
@@ -34,7 +35,7 @@ export const ABILITY_CATEGORIES = {
         id: 1,
         damage: 1,
         heal: -1,
-        attackSpeed: 1,
+        attackSpeed: 10,
       },
     },
   },

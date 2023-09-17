@@ -31,7 +31,7 @@ export const player = ref<Player>(
 )
 
 export const gameTicks = ref(0)
-const ticksPerSecond = 24
+export const ticksPerSecond = 24
 
 const playerInputInterval = setInterval(() => {
   gameTicks.value++

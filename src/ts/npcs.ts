@@ -1,54 +1,52 @@
-import { ref } from "vue";
-import { Entity, InvetorySlot } from "./types";
-import { createInventoryWithItems, entityFactory } from "./utils";
-import { Tuple } from "./typehelpers";
+import { ref } from 'vue'
+import { Entity, InvetorySlot } from './types'
+import { createInventoryWithItems, entityFactory } from './utils'
+import { Tuple } from './typehelpers'
 
-export const npcInventory = ref<Tuple<InvetorySlot, 16>>(
-  createInventoryWithItems()
-);
+export const npcInventory = ref<Tuple<InvetorySlot, 16>>(createInventoryWithItems())
 
 export const npcs = ref<Entity[]>([
   entityFactory({
     id: 1,
-    name: "NPC",
+    name: 'NPC',
     type: 'npc',
     x: 160,
     y: 160,
     money: 10,
     dialog: {
       init: {
-        text: "test",
+        text: 'test',
         answers: [
           {
-            text: "continue",
-            next: "exit",
+            text: 'continue',
+            next: 'exit',
           },
           {
-            text: "bye",
+            text: 'bye',
           },
         ],
       },
       exit: {
-        text: "test2",
+        text: 'test2',
         answers: [
           {
-            text: "back",
-            next: "init",
+            text: 'back',
+            next: 'init',
           },
         ],
       },
     },
-    currentDialog: "init",
+    currentDialog: 'init',
   }),
   entityFactory({
     id: 2,
-    name: "Merchant",
+    name: 'Merchant',
     type: 'npc',
     x: 260,
     y: 260,
-    image: "npc/Merchant.png",
+    image: 'npc/Merchant.png',
     money: 10,
-    currentDialog: "init",
+    currentDialog: 'init',
     inventory: {
       size: 16,
       items: createInventoryWithItems([
@@ -61,30 +59,30 @@ export const npcs = ref<Entity[]>([
     },
     dialog: {
       init: {
-        text: "Hi",
+        text: 'Hi',
         answers: [
           {
-            text: "open shop",
-            next: "exit",
+            text: 'open shop',
+            next: 'exit',
             action: () => {
-              const inventory = npcs.value.find((n) => n.id == 2)!.inventory;
-              npcInventory.value = inventory.items;
-              inventory.openend = true;
+              const inventory = npcs.value.find((n) => n.id == 2)!.inventory
+              npcInventory.value = inventory.items
+              inventory.openend = true
             },
           },
           {
-            text: "bye",
+            text: 'bye',
           },
         ],
       },
       exit: {
-        text: "choose what you want",
+        text: 'choose what you want',
         answers: [
           {
-            text: "bye",
+            text: 'bye',
           },
         ],
       },
     },
   }),
-]);
+])

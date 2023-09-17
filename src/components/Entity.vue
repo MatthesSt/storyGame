@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { toRefs } from "vue";
-import { Entity } from "../ts/types";
-const props = defineProps<{
-  entity: Entity;
-  canTalk?: boolean;
-}>();
-const { entity } = toRefs(props);
+import { Entity } from '../ts/types'
+defineProps<{
+  entity: Entity
+  canTalk?: boolean
+}>()
 </script>
 <template>
   <div
@@ -21,18 +19,26 @@ const { entity } = toRefs(props);
         : 'background-color:' + (entity.talking ? 'red' : 'black')
     }`"
   >
-  <template v-if="entity.type =='enemy'">  
-      <img class="emptyHealth" src="/emptyHealth.png" style="position: absolute; top:-10px;left:60%;transform:translateX(-50%);">
-      <img class="fullHealth" src="/fullHealth.png" style="position: absolute;top:-10px;left:60%;transform:translateX(-50%)" :style="`
-      width:${entity.currentHealth*150/ entity.maxHealth}%;
+    <template v-if="entity.type == 'enemy'">
+      <img
+        class="emptyHealth"
+        src="/emptyHealth.png"
+        style="position: absolute; top: -10px; left: 60%; transform: translateX(-50%)"
+      />
+      <img
+        class="fullHealth"
+        src="/fullHealth.png"
+        style="position: absolute; top: -10px; left: 60%; transform: translateX(-50%)"
+        :style="`
+      width:${(entity.currentHealth * 150) / entity.maxHealth}%;
       height: 5px;      
-      `">
-  </template>
-
+      `"
+      />
+    </template>
   </div>
 </template>
 <style scoped lang="scss">
-@import "../style.scss";
+@import '../style.scss';
 $ration: 0.8;
 $size: calc(#{$tileSize} * #{$ration});
 
@@ -54,7 +60,7 @@ $size: calc(#{$tileSize} * #{$ration});
   }
 }
 .canTalk::after {
-  content: "talk (e)";
+  content: 'talk (e)';
   width: max-content;
   bottom: 0;
   font-size: 14px;

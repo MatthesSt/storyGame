@@ -1,24 +1,21 @@
 <script lang="ts" setup>
-import { Entity } from "../ts/types";
-import { player } from "../ts/player";
+import { Entity } from '../ts/types'
+import { player } from '../ts/player'
 
 defineProps<{
-  npc: Entity;
-}>();
+  npc: Entity
+}>()
 
-function execute(
-  npc: Entity,
-  answer: { action?: () => void; text: string; next?: string }
-) {
+function execute(npc: Entity, answer: { action?: () => void; text: string; next?: string }) {
   if (answer.next) {
-    npc.currentDialog = answer.next;
+    npc.currentDialog = answer.next
   } else {
-    npc.currentDialog = "init";
-    npc.talking = false;
-    npc.inventory.openend = false;
-    player.value.talking = false;
+    npc.currentDialog = 'init'
+    npc.talking = false
+    npc.inventory.openend = false
+    player.value.talking = false
   }
-  if (answer.action) answer.action();
+  if (answer.action) answer.action()
 }
 </script>
 
@@ -29,9 +26,7 @@ function execute(
     </div>
     <div class="answers">
       <div v-for="(answer, index) in npc.dialog?.[npc.currentDialog].answers">
-        <button class="answer" @click.stop="execute(npc, answer)">
-          {{ index + 1 }}: {{ answer.text }}
-        </button>
+        <button class="answer" @click.stop="execute(npc, answer)">{{ index + 1 }}: {{ answer.text }}</button>
       </div>
     </div>
   </div>

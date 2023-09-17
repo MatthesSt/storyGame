@@ -1,23 +1,16 @@
 <script setup lang="ts">
-import { toRefs } from "vue";
-import type { Area } from "../ts/area";
+import { toRefs } from 'vue'
+import type { Area } from '../ts/area'
 
 const props = defineProps<{
-  area: Area;
-}>();
-const { area } = toRefs(props);
+  area: Area
+}>()
+const { area } = toRefs(props)
 </script>
 <template>
-  <div
-    style="display: grid; position: relative"
-    :style="`grid-template-columns:repeat(${area.width},1fr)`"
-  >
+  <div style="display: grid; position: relative" :style="`grid-template-columns:repeat(${area.width},1fr)`">
     <div v-for="x in area.width">
-      <div
-        v-for="y in area.height"
-        class="tile"
-        :style="`background-image: url(${area.floorImage})`"
-      ></div>
+      <div v-for="y in area.height" class="tile" :style="`background-image: url(${area.floorImage})`"></div>
     </div>
     <div
       v-for="portal in area.portals"
@@ -29,14 +22,14 @@ const { area } = toRefs(props);
       }"
     ></div>
     <slot name="player"></slot>
-
-    <slot name="enemy"></slot>
+    <slot name="npcs"></slot>
+    <slot name="enemies"></slot>
     <slot name="dialog"></slot>
     <slot name="inventory"></slot>
   </div>
 </template>
 <style scoped lang="scss">
-@import "../style.scss";
+@import '../style.scss';
 .tile {
   width: $tileSize;
   height: $tileSize;
@@ -49,4 +42,3 @@ const { area } = toRefs(props);
   position: absolute;
 }
 </style>
-../ts/area

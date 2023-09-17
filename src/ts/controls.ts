@@ -1,4 +1,4 @@
-import { ref, watch } from "vue";
+import { ref, watch } from 'vue'
 
 const pressedKeys = ref({
   ArrowUp: false,
@@ -8,16 +8,16 @@ const pressedKeys = ref({
   e: false,
   i: false,
   f: false,
-});
+})
 
 window.onkeydown = (event: any) => {
-  pressedKeys.value[event.key as keyof typeof pressedKeys.value] = true;
-};
+  pressedKeys.value[event.key as keyof typeof pressedKeys.value] = true
+}
 
 window.onkeyup = (event: any) => {
-  pressedKeys.value[event.key as keyof typeof pressedKeys.value] = false;
-};
+  pressedKeys.value[event.key as keyof typeof pressedKeys.value] = false
+}
 
 export function isPressed(key: keyof typeof pressedKeys.value) {
-  return pressedKeys.value[key];
+  return pressedKeys.value[key]
 }

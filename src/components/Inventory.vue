@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Entity, ItemCategory } from "../ts/types";
-import { items } from "../ts/items";
-import { npcInventory } from "../ts/npcs";
+import { Entity, EquipmentCategory, EQUIPMENT_CATEGORIES } from '../ts/types'
+import { items } from '../ts/items'
+import { npcInventory } from '../ts/npcs'
 import {
   buyItem,
   closeNpc,
@@ -10,64 +10,61 @@ import {
   hasFreeInventorySpace,
   giveItemToEntity,
   takeItemFromEntity,
-} from "../ts/player";
-import { ref } from "vue";
+} from '../ts/player'
+import { ref } from 'vue'
 
 defineProps<{
-  player: Entity;
-}>();
+  player: Entity
+}>()
 
 const movingItem = ref<{
-  itemId: number | null;
-  from?: "inventory" | "equipment";
-}>({ itemId: null });
+  itemId: number | null
+  from?: 'inventory' | 'equipment'
+}>({ itemId: null })
 
 function dragFromInventory(itemId: number) {
-  if (itemId == 0) return;
-  movingItem.value = { itemId, from: "inventory" };
+  if (itemId == 0) return
+  movingItem.value = { itemId, from: 'inventory' }
 }
 
-function dragFromEquipment(key: ItemCategory) {
-  if (!player.value.equipment) return;
+function dragFromEquipment(key: EquipmentCategory) {
+  if (!player.value.equipment) return
   movingItem.value = {
     itemId: player.value.equipment[key]!.id,
-    from: "equipment",
-  };
+    from: 'equipment',
+  }
 }
-function markAsDropzone(event: DragEvent, storage: "inventory" | "equipment") {
+function markAsDropzone(event: DragEvent, storage: 'inventory' | 'equipment') {
   //no item to move
   if (!movingItem.value || !movingItem.value.itemId) {
-    return (event.dataTransfer!.dropEffect = "none");
+    return (event.dataTransfer!.dropEffect = 'none')
   }
-  if (movingItem.value.from == storage)
-    return (event.dataTransfer!.dropEffect = "none");
+  if (movingItem.value.from == storage) return (event.dataTransfer!.dropEffect = 'none')
   //no space in inventory/equipment
   if (
-    (storage == "inventory" &&
-      !hasFreeInventorySpace(player.value, movingItem.value.itemId)) ||
-    (storage == "equipment" &&
-      player.value.equipment?.[items[movingItem.value.itemId].category])
+    (storage == 'inventory' && !hasFreeInventorySpace(player.value, movingItem.value.itemId)) ||
+    (storage == 'equipment' && player.value.equipment?.[items[movingItem.value.itemId].category as EquipmentCategory])
   ) {
-    return (event.dataTransfer!.dropEffect = "none");
+    return (event.dataTransfer!.dropEffect = 'none')
   }
   //moveable
-  event.dataTransfer!.dropEffect = "move";
-  event.preventDefault();
+  event.dataTransfer!.dropEffect = 'move'
+  event.preventDefault()
 }
 
 function dropAtEquipment() {
-  if (!movingItem.value || !movingItem.value.itemId) return;
-  if (player.value.equipment?.[items[movingItem.value.itemId].category]) return;
-  player.value.equipment![items[movingItem.value.itemId].category] =
-    items[movingItem.value.itemId];
+  if (!movingItem.value || !movingItem.value.itemId) return
+  if (!EQUIPMENT_CATEGORIES.find((e) => e == items[movingItem.value.itemId!].category)) return
+  if (player.value.equipment?.[items[movingItem.value.itemId].category as EquipmentCategory]) return
+  player.value.equipment![items[movingItem.value.itemId].category as EquipmentCategory] = items[movingItem.value.itemId]
 
-  takeItemFromEntity(player.value, movingItem.value.itemId);
-  movingItem.value = { itemId: null };
+  takeItemFromEntity(player.value, movingItem.value.itemId)
+  movingItem.value = { itemId: null }
 }
 function dropAtInventory() {
-  giveItemToEntity(player.value, movingItem.value.itemId!);
-  player.value.equipment![items[movingItem.value.itemId!].category] = null;
-  movingItem.value = { itemId: null };
+  giveItemToEntity(player.value, movingItem.value.itemId!)
+  player.value.equipment![items[movingItem.value.itemId!].category as EquipmentCategory] = null
+  movingItem.value = { itemId: null }
 }
 </script>
 <template>
@@ -92,16 +89,13 @@ function dropAtInventory() {
     </div>
   </section>
   <section class="playerEquipment">
-    <div
-      class="equipment"
-      v-for="[key, item] in Object.entries(player.equipment || {})"
-    >
+    <div class="equipment" v-for="[key, item] in Object.entries(player.equipment || {})">
       <img
         :src="item?.image || `equipment_bg/${key}_bg.png`"
         style="height: 100%; width: 100%; object-fit: contain"
         @dragover="markAsDropzone($event, 'equipment')"
         @drop="dropAtEquipment()"
-        @dragstart="dragFromEquipment(key as ItemCategory)"
+        @dragstart="dragFromEquipment(key as EquipmentCategory)"
         :draggable="!!item"
       />
     </div>
@@ -119,7 +113,7 @@ function dropAtInventory() {
   </section>
 </template>
 <style lang="scss" scoped>
-@import "../style.scss";
+@import '../style.scss';
 .playerInventory {
   width: calc($tileSize * 4);
   height: calc($tileSize * 4);

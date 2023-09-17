@@ -5,11 +5,23 @@ import { getDistance } from './math'
 import { gameTicks, player } from './player'
 import { Entity } from './types'
 
-export function entityAttack(entity: Entity) {
-  if (entity.type == 'player' && isPressed('f')) playerAttack()
+export function enemyAttack() {
+  for (let enemy of enemies.value) {
+    if (!getEnemiesInArea().find((e) => e.id === enemy.id)) return
+    if (getDistance(enemy, player.value) >= enemy.lookRadius) return
+    console.log('test')
+  }
+}
+
+export function enemyMeleeAttack(entitiy: Entity) {
+  console.log(entitiy)
+}
+export function enemyRangeAttack(entitiy: Entity) {
+  console.log(entitiy)
 }
 
 export function playerAttack() {
+  if (!isPressed('f')) return
   if (
     !player.value.equipment ||
     !player.value.equipment.weapon ||

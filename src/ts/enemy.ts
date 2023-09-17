@@ -1,15 +1,19 @@
 import { entityFactory } from './utils'
 import { player } from './player'
-import { Entity } from './types'
+import { ABILITY_CATEGORIES, Entity } from './types'
 import { ref } from 'vue'
 import { areas, currentArea } from './area'
 import { getDistance, getVector } from './math'
+import { enemyAttack, getEnemiesInArea } from './combat'
 
 export const enemies = ref<Entity[]>([
   entityFactory({
     id: 1,
     name: 'bat',
     type: 'enemy',
+    abilities: {
+      melee: [ABILITY_CATEGORIES.attack.melee.bite],
+    },
     maxHealth: 10,
     currentHealth: 10,
     x: 200,
@@ -24,6 +28,9 @@ export const enemies = ref<Entity[]>([
     id: 2,
     name: 'slime',
     type: 'enemy',
+    abilities: {
+      range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
+    },
     maxHealth: 20,
     currentHealth: 20,
     x: 320,
@@ -38,6 +45,9 @@ export const enemies = ref<Entity[]>([
     id: 3,
     name: 'slime',
     type: 'enemy',
+    abilities: {
+      range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
+    },
     maxHealth: 50,
     currentHealth: 50,
     x: 320,
@@ -55,6 +65,7 @@ const ticksPerSecond = 24
 
 const enemyInterval = setInterval(() => {
   gameTicks.value++
+  enemyAttack()
   if (gameTicks.value % 2 == 0) moveEnemy()
 }, 1000 / ticksPerSecond)
 

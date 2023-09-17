@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { Tuple } from './typehelpers'
-import { Entity, InvetorySlot } from './types'
+import { ABILITY_CATEGORIES, Entity, InvetorySlot } from './types'
+import { attackEntity } from './combat'
 
 const entityCounter = ref(1)
 
@@ -33,6 +34,10 @@ export function entityFactory(options: { type: Entity['type'] } & Partial<Entity
     currentHealth: 0,
     maxMana: 0,
     currentMana: 0,
+    abilities: {
+      melee: [ABILITY_CATEGORIES.attack.melee.bite, ABILITY_CATEGORIES.attack.melee.bodySlam],
+      range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
+    },
     x: 0,
     y: 0,
     width: 40,

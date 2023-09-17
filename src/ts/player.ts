@@ -6,7 +6,7 @@ import { npcs } from './npcs'
 import { currentArea, areas } from './area'
 import { items } from './items'
 import { createInventoryWithItems, entityFactory, createEquipmentWithItems } from './utils'
-import { entityAttack } from './combat'
+import { playerAttack } from './combat'
 
 export const player = ref<Player>(
   entityFactory({
@@ -37,7 +37,7 @@ const playerInputInterval = setInterval(() => {
   gameTicks.value++
   if (!player.value.talking) {
     playerMovement()
-    entityAttack(player.value)
+    playerAttack()
     if (gameTicks.value % 12 == 0) checkPortals()
   }
   playerCommunication()

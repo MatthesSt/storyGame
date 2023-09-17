@@ -13,18 +13,28 @@ export const EQUIPMENT_CATEGORIES = [
 ] as const
 export const ENTITY_CATEGORIES = ['npc', 'player', 'enemy'] as const
 export const WEAPON_CATEGORIES = ['magic', 'melee', 'range'] as const
-export const ATTACK_CATEGORIES = {
-  melee: {
-    bite: {
-      id: 1,
-      damage: 1,
-      heal: 1,
+export const ABILITY_CATEGORIES = {
+  attack: {
+    melee: {
+      bite: {
+        id: 1,
+        damage: 1,
+        heal: 1,
+        attackSpeed: 1,
+      },
+      bodySlam: {
+        id: 2,
+        damage: 1,
+        heal: 0,
+        attackSpeed: 1,
+      },
     },
     range: {
       slimeSpit: {
-        id: 2,
+        id: 1,
         damage: 1,
         heal: -1,
+        attackSpeed: 1,
       },
     },
   },
@@ -33,7 +43,7 @@ export const ATTACK_CATEGORIES = {
 export type ItemCategory = 'consumable' | 'material' | 'misc' | EquipmentCategory
 export type WeaponCategory = (typeof WEAPON_CATEGORIES)[number]
 export type EntityCategory = (typeof ENTITY_CATEGORIES)[number]
-export type AttackCategories = typeof ATTACK_CATEGORIES
+export type AbilityCategories = typeof ABILITY_CATEGORIES
 export type EquipmentCategory = (typeof EQUIPMENT_CATEGORIES)[number]
 
 export type Entity = {
@@ -56,7 +66,11 @@ export type Entity = {
   talking: boolean
   attacking?: boolean
   blocking?: boolean
-  abilities?: AttackCategories
+  abilities?: {
+    melee?: AbilityCategories['attack']['melee'][keyof AbilityCategories['attack']['melee']][]
+    range?: AbilityCategories['attack']['range'][keyof AbilityCategories['attack']['range']][]
+  }
+
   inventory: {
     size: number
     items: Tuple<InvetorySlot, 16>

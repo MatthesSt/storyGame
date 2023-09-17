@@ -2,7 +2,7 @@
 import { player } from '../ts/player'
 </script>
 <template>
-  <div class="playerStats">
+  <div class="playerStats" v-show="player.currentHealth >= 0">
     <div class="health">
       <img class="emptyHealth" src="/player/playerEmptyBar.png" :style="`width:${player.maxHealth}px;`" />
       <img
@@ -27,9 +27,27 @@ import { player } from '../ts/player'
       </div>
     </div>
   </div>
+  <div class="playerDeath" v-show="player.currentHealth <= 0">
+    <div class="deathScreen">
+      <p style="box-sizing;: 1cm solid black">You died</p>
+    </div>
+  </div>
 </template>
 <style lang="scss" scoped>
 @import '../style.scss';
+.deathScreen {
+  top: 0cm;
+  left: 0cm;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .playerStats img {
   right: 100px;

@@ -56,6 +56,7 @@ function playerCommunication() {
 }
 
 function playerMovement() {
+  if (player.value.currentHealth <= 0) return
   if (isPressed('ArrowUp')) {
     movePlayer(0, -1)
     player.value.image = 'player/player_default_back.png'

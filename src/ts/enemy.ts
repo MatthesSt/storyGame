@@ -71,6 +71,7 @@ const enemyInterval = setInterval(() => {
 }, 1000 / ticksPerSecond)
 
 export function moveEnemy() {
+  if (player.value.currentHealth <= 0) return
   for (let enemy of enemies.value) {
     if (!getEnemiesInArea().find((e) => e.id === enemy.id)) continue
     let closeEnemies = getEnemiesInArea().filter((e) => getDistance(player.value, e) < e.lookRadius)

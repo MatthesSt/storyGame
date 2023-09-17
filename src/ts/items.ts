@@ -12,7 +12,7 @@ export const items: Record<Item["id"], Item> = {
     value: 1,
     damage: 1,
     useSpeed: 10,
-    range:40,//px
+    range:40,
     image: "/item/weapon/wood_stick.png",
   },
   2: {
@@ -77,6 +77,6 @@ export const items: Record<Item["id"], Item> = {
     image: "/item/weapon/bat_wing.png",
   },
 };
-console.log(items)
+
 
 

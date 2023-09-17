@@ -28,12 +28,34 @@ const { entity } = toRefs(props);
       height: 5px;      
       `">
   </template>
+  <!-- <template v-if="entity.type =='player'" >  
+    <div class="showWeapon"> 
+
+    </div>
+    <div class="attackAnimation" style="position: absolute; top:15px;left:100%">
+
+
+    </div> -->
+  <!-- </template> -->
   </div>
 </template>
 <style scoped lang="scss">
 @import "../style.scss";
 $ration: 0.8;
 $size: calc(#{$tileSize} * #{$ration});
+
+.attackAnimation {
+  width: 20px;
+  height: 8px; /* as the half of the width */
+  border-top-left-radius: 10px;  /* 100px of height + 10px of border */
+  border-top-right-radius: 10px; /* 100px of height + 10px of border */
+  border: 2px solid gray;
+  border-bottom: 0;
+  transform: rotate(90deg);
+}
+
+
+
 .entity {
   width: $size;
   height: $size;

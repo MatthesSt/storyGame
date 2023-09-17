@@ -22,9 +22,9 @@ const { entity } = toRefs(props);
     }`"
   >
   <template v-if="entity.type =='enemy'">  
-      <img class="emptyHealth" src="/emptyHealth.png" style="position: absolute; top:-10px;left:60%;transform:translateX(-50%)">
+      <img class="emptyHealth" src="/emptyHealth.png" style="position: absolute; top:-10px;left:60%;transform:translateX(-50%); width: 100%;">
       <img class="fullHealth" src="/fullHealth.png" style="position: absolute;top:-10px;left:60%;transform:translateX(-50%)" :style="`
-      width:${entity.currentHealth* 150/ entity.maxHealth}%;
+      width:${entity.currentHealth*100/ entity.maxHealth}%;
       height: 5px;      
       `">
   </template>

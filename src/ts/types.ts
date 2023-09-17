@@ -18,10 +18,14 @@ export const ATTACK_CATEGORIES = {
     bite: {
       id: 1,
       damage: 1,
+      heal: 1,
     },
-    bodyslam: {
-      id: 2,
-      damage: 1,
+    range: {
+      slimeSpit: {
+        id: 2,
+        damage: 1,
+        heal: -1,
+      },
     },
   },
 } as const

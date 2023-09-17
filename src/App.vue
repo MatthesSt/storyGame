@@ -9,6 +9,7 @@ import { player, closeNpc } from "./ts/player";
 import { npcs } from "./ts/npcs";
 import { getTileIndices } from "./ts/math";
 import { enemies } from "./ts/enemy";
+import { Entity } from "./ts/types";
 </script>
 
 <template>
@@ -32,7 +33,7 @@ import { enemies } from "./ts/enemy";
           :canTalk="npc.id == closeNpc?.id"
         ></Entity>
         <Entity
-          v-for="enemy in enemies.filter((e:any) =>
+          v-for="enemy in enemies.filter((e) =>
             areas[currentArea].enemies?.find((n) => n == e.id)
           )" 
           :entity="enemy"

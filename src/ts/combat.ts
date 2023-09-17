@@ -5,49 +5,45 @@ import { getDistance } from "./math";
 import { gameTicks, player } from "./player";
 import { Entity } from "./types";
 
+
 export function entityAttack(entity: Entity){
-    if (entity.type =="player"&& isPressed('f'))   playerAttack(entity)
-    
+    if (entity.type =="player"&& isPressed('f')) playerAttack()
 }
 
-export function playerAttack(entity: Entity){
-    if (canNotAttack(entity)) return  
-    if (!entity.equipment?.weapon ) return
-    if (entity.equipment.weapon?.type === 'melee') {
-        meleeAtack(entity)
-    }
+export function playerAttack(){
+    if (!player.value.equipment || !player.value.equipment.weapon||!player.value.equipment.weapon.damage||!player.value.equipment.weapon.useSpeed||!player.value.equipment.weapon.range) return
+    if (gameTicks.value% player.value.equipment.weapon.useSpeed!==0) return
+    if (player.value.attacking) return 
+    player.value.attacking=true
+    if (CheckForEnemiesInArea()) attackEntity(player.value)
+    player.value.attacking=false
 }
-function canNotAttack(entity: Entity){
-    if (entity.attacking|| entity.blocking )return true
-    if (!entity.equipment)return true
-    return false
+export function CheckForEnemiesInArea(){
+    if (areas.value[currentArea.value].enemies.length) return true
+    else return false
 }
 
-export function meleeAtack(entity: Entity){
-    if (!(gameTicks.value*24 % entity.equipment?.weapon?.useSpeed! === 0))return true //every weapon has an useSpeed so shut up
-    let closeEnemies = getEnemiesInRange(entity)
-    if (!entity.equipment?.weapon?.damage ||!closeEnemies||!returnNumberOfEnemyInCurrentArea()) return
-for (let enemy of enemies.value) {
-    if (!closeEnemies) return
-    console.log(closeEnemies)
-    if (!closeEnemies.find((e)=>e.id)) return
-    console.log("test", closeEnemies.find((e)=>e.id === enemy.id))
-    closeEnemies.find((e)=>e.id === enemy.id)!.currentHealth -= entity.equipment?.weapon?.damage
-    if ( enemies.value.find((e)=> closeEnemies.find((n)=> n.id=== e.id))!.currentHealth===0){
-        areas.value[currentArea.value].enemies = areas.value[currentArea.value].enemies?.filter((e)=> e !== enemies.value.find((e)=> closeEnemies.find((n)=> n.id=== e.id))!.id)
-        }       
+export function attackEntity(entity:Entity){
+if (entity.type==="player" && entity.equipment?.weapon?.range) dealDamage(player.value, getEnemiesInRange(entity))
+}
+
+export function dealDamage(dealer:Entity,targets:Entity[]){
+for (let target of targets){
+     target.currentHealth -= 1
+    if (target.currentHealth===0) killEnemy(target)
     }
 }
 
-export function getEnemiesInRange(entity: Entity){
-    return enemies.value.filter(
-        (n, index)=> areas.value[currentArea.value].enemies[index] === n.id).filter(
-            (t)=> getDistance(entity, t)< entity.equipment?.weapon?.range!)
+export function killEnemy(enemy:Entity){
+enemies.value = enemies.value.filter((e)=>e.id !== enemy.id)
+
 }
 
-export function returnLivingEnemyInCurrentArea(){
-    return enemies.value.filter((e)=>areas.value[currentArea.value].enemies.find((n)=> n ===e.id))
+
+export function getEnemiesInRange(entity:Entity){
+   return getEnemiesInArea().filter((e)=> getDistance(e,entity)< entity.equipment?.weapon?.range!)
 }
-export function returnNumberOfEnemyInCurrentArea(){
-    return enemies.value.filter((e)=>areas.value[currentArea.value].enemies.find((n)=> n ===e.id)).length
+
+export function getEnemiesInArea(){
+     return enemies.value.filter((enemy)=> areas.value[currentArea.value].enemies.find((n)=>n ===enemy.id))
 }

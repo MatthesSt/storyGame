@@ -33,7 +33,21 @@ export const enemies= ref<Entity[]>([
     movespeed: 2, 
     lookRadius:75,
     image: "enemy/slime.png",
-  })
+  }),
+  entityFactory({
+    id: 3,
+    name: "slime",
+    type:"enemy",
+    maxHealth:20,
+    currentHealth: 20,
+    x: 320,
+    y: 220,
+    height: 28,
+    width: 26,
+    movespeed: 2, 
+    lookRadius:75,
+    image: "enemy/slime.png",
+  }),
 ]);
 
 const gameTicks = ref(0);

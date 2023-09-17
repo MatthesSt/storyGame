@@ -49,6 +49,7 @@ export type EquipmentCategory = (typeof EQUIPMENT_CATEGORIES)[number]
 
 export type Entity = {
   id: number
+  level: number
   type: EntityCategory
   name: string
   maxHealth: number

@@ -51,8 +51,8 @@ export const enemies = ref<Entity[]>([
       range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
       melee: [ABILITY_CATEGORIES.attack.melee.bodySlam],
     },
-    maxHealth: 50,
-    currentHealth: 50,
+    maxHealth: 20,
+    currentHealth: 20,
     x: 320,
     y: 220,
     height: 28,
@@ -73,13 +73,16 @@ const enemyInterval = setInterval(() => {
 }, 1000 / ticksPerSecond)
 
 export function moveEnemy() {
-  if (!areas.value[currentArea.value].enemies?.length) return
-  let closeEnemies = enemies.value.filter((e) => getDistance(player.value, e) < e.lookRadius)
-  if (closeEnemies.length) {
-    for (let enemy of closeEnemies) {
-      enemy.x += getVector(enemy, player.value)[0] * enemy.movespeed
-      enemy.y += getVector(enemy, player.value)[1] * enemy.movespeed
+  for (let enemy of enemies.value) {
+    if (!getEnemiesInArea().find((e) => e.id === enemy.id)) continue
+    let closeEnemies = getEnemiesInArea().filter((e) => getDistance(player.value, e) < e.lookRadius)
+    console.log(closeEnemies)
+    if (closeEnemies.length) {
+      for (let enemy of closeEnemies) {
+        enemy.x += getVector(enemy, player.value)[0] * enemy.movespeed
+        enemy.y += getVector(enemy, player.value)[1] * enemy.movespeed
+      }
     }
+    //TODO: wenn spieler nicht in der nähe, entweder zum spawnpunkt zurück kehren oder sich hin und her bewegen.
   }
-  //TODO: wenn spieler nicht in der nähe, entweder zum spawnpunkt zurück kehren oder sich hin und her bewegen.
 }

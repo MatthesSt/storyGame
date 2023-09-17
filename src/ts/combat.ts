@@ -67,7 +67,7 @@ export function attackEnemy() {
 export function dealDamageToEnemy(dealer: Entity, targets: Entity[]) {
   for (let target of targets) {
     target.currentHealth -= dealer.equipment.weapon?.damage! //zuvor bereits gecheckt
-    if (target.currentHealth === 0) killEnemy(target)
+    if (target.currentHealth <= 0) killEnemy(target)
   }
 }
 

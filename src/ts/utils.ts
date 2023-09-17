@@ -28,6 +28,7 @@ export function entityFactory(options: { type: Entity['type'] } & Partial<Entity
   return {
     id: entityCounter.value++,
     name: '',
+    level: 1,
     lookRadius: 0,
     maxHealth: 0,
     currentHealth: 0,

@@ -1,4 +1,3 @@
-import { ticksPerSecond } from './player'
 import { Tuple } from './typehelpers'
 
 export const EQUIPMENT_CATEGORIES = [

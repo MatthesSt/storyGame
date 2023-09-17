@@ -35,8 +35,8 @@ export function entityFactory(options: { type: Entity['type'] } & Partial<Entity
     maxMana: 0,
     currentMana: 0,
     abilities: {
-      melee: [ABILITY_CATEGORIES.attack.melee.bite, ABILITY_CATEGORIES.attack.melee.bodySlam],
-      range: [ABILITY_CATEGORIES.attack.range.slimeSpit],
+      melee: [],
+      range: [],
     },
     x: 0,
     y: 0,

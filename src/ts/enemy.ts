@@ -2,7 +2,6 @@ import { entityFactory } from './utils'
 import { player } from './player'
 import { ABILITY_CATEGORIES, Entity } from './types'
 import { ref } from 'vue'
-import { areas, currentArea } from './area'
 import { getDistance, getVector } from './math'
 import { performEnemyAttack, getEnemiesInArea } from './combat'
 

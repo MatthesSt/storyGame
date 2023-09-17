@@ -7,6 +7,7 @@ const pressedKeys = ref({
   ArrowRight: false,
   e: false,
   i: false,
+  f: false,
 });
 
 window.onkeydown = (event: any) => {

@@ -9,6 +9,9 @@ export const enemies= ref<Entity[]>([
    entityFactory({
     id: 1,
     name: "bat",
+    type:"enemy",
+    maxHealth:10,
+    currentHealth: 10,
     x: 200,
     y: 200,
     height: 12,
@@ -20,14 +23,31 @@ export const enemies= ref<Entity[]>([
   entityFactory({
     id: 2,
     name: "slime",
+    type:"enemy",
+    maxHealth:20,
+    currentHealth: 20,
     x: 320,
     y: 220,
     height: 28,
-    width: 26,
+    width: 30,
     movespeed: 2, 
     lookRadius:75,
     image: "enemy/slime.png",
-  })
+  }),
+  entityFactory({
+    id: 3,
+    name: "slime",
+    type:"enemy",
+    maxHealth:50,
+    currentHealth: 50,
+    x: 320,
+    y: 220,
+    height: 28,
+    width: 30,
+    movespeed: 2, 
+    lookRadius:75,
+    image: "enemy/slime.png",
+  }),
 ]);
 
 const gameTicks = ref(0);
@@ -48,11 +68,4 @@ export function moveEnemy() {
     }
   } 
   //TODO: wenn spieler nicht in der nähe, entweder zum spawnpunkt zurück kehren oder sich hin und her bewegen.
-  // else {
-  //   for (let enemy of enemies.value){
-  //     console.log("move")
-  //     enemy.x += (Math.random()>0.5 ? Math.random() *enemy.movespeed :-Math.random() *enemy.movespeed )*2
-  //     enemy.y += (Math.random()>0.5 ? Math.random() *enemy.movespeed :-Math.random() *enemy.movespeed )*2
-  //    }
-  // }
 }

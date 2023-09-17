@@ -1,34 +1,42 @@
 import type { Item } from "./types.ts";
 
 export const items: Record<Item["id"], Item> = {
+
   1: {
     name: "Stick",
     id: 1,
     category: "weapon",
     description: "A stick",
+    type: "melee",
     maxStack: 10,
     value: 1,
     damage: 1,
+    useSpeed: 10,
+    range:40,
     image: "/item/weapon/wood_stick.png",
   },
   2: {
     name: "Wood Sword",
     id: 2,
     category: "weapon",
+    type: "melee",
     description: "A sword that was probaply used for training",
     maxStack: 1,
     value: 5,
     damage: 5,
+    useSpeed: 4,
     image: "/item/weapon/wood_sword.png",
   },
   3: {
     name: "Wood Dagger",
     id: 3,
+    type: "melee",
     category: "weapon",
     description: "Looks like a Dagger made out of Wood",
     maxStack: 5,
     value: 5,
     damage: 6,
+    useSpeed: 4,
     image: "/item/weapon/wood_dagger.png",
   },
   4: {
@@ -39,6 +47,36 @@ export const items: Record<Item["id"], Item> = {
     maxStack: 1,
     value: 7,
     defense: 2,
+    useSpeed: 0,
     image: "/item/armor/leather_pants.png",
   },
+  5: {
+    name: "Bat wing",
+    id: 5,
+    category: "weapon",
+    type: 'range',
+    description: "the wing of an bat",
+    maxStack: 1,
+    value: 0,
+    defense: 0,
+    useSpeed: 0,
+    damage:1,
+    image: "/item/weapon/bat_wing.png",
+  },
+  6: {
+    name: "Slime goo",
+    id: 6,
+    category: "weapon",
+    type: 'range',
+    description: "the wing of an bat",
+    maxStack: 1,
+    value: 0,
+    defense: 0,
+    useSpeed: 0,
+    damage:1,
+    image: "/item/weapon/bat_wing.png",
+  },
 };
+
+
+

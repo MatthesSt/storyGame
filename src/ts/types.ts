@@ -1,6 +1,6 @@
 import { Tuple } from "./typehelpers";
 
-export const CATEGORIES = [
+export const ITEM_CATEGORIES = [
   "head",
   "body",
   "arms",
@@ -11,11 +11,43 @@ export const CATEGORIES = [
   "tool",
   "accessory",
 ] as const;
-export type ItemCategory = (typeof CATEGORIES)[number];
+export const ENTITY_CATEGORIES = [
+  "npc",
+  "player",
+  "enemy",
+  undefined
+] as const;
+export const WEAPON_CATEGORIES = [
+  "magic",
+  "melee",
+  "range",
+] as const;
+export const ATTACK_CATEGORIES = {
+  "melee" :{
+    "bite" :{
+      id:1,
+      damage: 1,
+    },
+    "bodyslam" :{
+      id:2,
+      damage: 1
+    }
+  },
+} as const;
+
+export type ItemCategory = (typeof ITEM_CATEGORIES)[number];
+export type WeaponCategory = (typeof WEAPON_CATEGORIES)[number];
+export type EntityCategory = (typeof ENTITY_CATEGORIES)[number];
+export type AttackCategories = (typeof ATTACK_CATEGORIES)
 
 export type Entity = {
   id: number;
+  type:EntityCategory
   name: string;
+  maxHealth: number;
+  currentHealth: number;
+  maxMana: number;
+  currentMana: number;
   x: number;
   y: number;
   height: number;
@@ -26,6 +58,9 @@ export type Entity = {
   image: string;
   lookRadius: number;
   talking: boolean;
+  attacking?: boolean;
+  blocking?: boolean;
+  abilities?: AttackCategories  
   inventory: {
     size: number;
     items: Tuple<InvetorySlot, 16>;
@@ -68,11 +103,13 @@ export type Item = {
   name: string;
   id: number;
   category: ItemCategory;
+  type?: WeaponCategory;
   description?: string;
   maxStack?: number;
   value: number;
   damage?: number;
   defense?: number;
+  useSpeed?: number;
   heal?: number;
   range?: number;
   onUse?: () => void;

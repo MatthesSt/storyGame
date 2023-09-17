@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Area from "./components/Area.vue";
 import Entity from "./components/Entity.vue";
-import Enemy from "./components/Enemy.vue";
+import Stats from "./components/Stats.vue";
 import NpcDialog from "./components/NpcDialog.vue";
 import Inventory from "./components/Inventory.vue";
 import { areas, currentArea } from "./ts/area";
@@ -32,9 +32,9 @@ import { enemies } from "./ts/enemy";
           :canTalk="npc.id == closeNpc?.id"
         ></Entity>
         <Entity
-          v-for="enemy in enemies.filter((e:any) =>
+          v-for="enemy in enemies.filter((e) =>
             areas[currentArea].enemies?.find((n) => n == e.id)
-          )"
+          )" 
           :entity="enemy"
           :style="`width: ${enemy.width}px; height: ${enemy.height}px`"
         ></Entity>
@@ -46,6 +46,7 @@ import { enemies } from "./ts/enemy";
         <Inventory :player="player" />
       </template>
     </Area>
+        <Stats></Stats>
   </main>
 </template>
 

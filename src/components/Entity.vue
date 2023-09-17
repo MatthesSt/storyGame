@@ -20,24 +20,35 @@ const { entity } = toRefs(props);
         ? 'background-image:url(' + entity.image + ')'
         : 'background-color:' + (entity.talking ? 'red' : 'black')
     }`"
-  ></div>
+  >
+  <template v-if="entity.type =='enemy'">  
+      <img class="emptyHealth" src="/emptyHealth.png" style="position: absolute; top:-10px;left:60%;transform:translateX(-50%);">
+      <img class="fullHealth" src="/fullHealth.png" style="position: absolute;top:-10px;left:60%;transform:translateX(-50%)" :style="`
+      width:${entity.currentHealth*150/ entity.maxHealth}%;
+      height: 5px;      
+      `">
+  </template>
+
+  </div>
 </template>
 <style scoped lang="scss">
 @import "../style.scss";
 $ration: 0.8;
 $size: calc(#{$tileSize} * #{$ration});
+
 .entity {
   width: $size;
   height: $size;
-  background-repeat: no-repeat;
-  background-size: cover;
   position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
   transform: translate(-50%, -50%);
-  border-radius: 30%;
+  // border-radius: 30%;
   &::before {
     content: attr(data-name);
+    top: -10px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     position: absolute;
     transform: translateY(-100%) translateX(calc($size / 2)) translateX(-50%);
   }

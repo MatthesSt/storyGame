@@ -15,14 +15,13 @@ export const ENTITY_CATEGORIES = [
   "npc",
   "player",
   "enemy",
-  "baseEntity",
 ] as const;
 export const WEAPON_CATEGORIES = [
   "magic",
   "melee",
   "range",
 ] as const;
-export const MELEE_ATTACK_CATEGORIES = {
+export const ATTACK_CATEGORIES = {
   "melee" :{
     "bite" :{
       id:1,
@@ -38,7 +37,7 @@ export const MELEE_ATTACK_CATEGORIES = {
 export type ItemCategory = (typeof ITEM_CATEGORIES)[number];
 export type WeaponCategory = (typeof WEAPON_CATEGORIES)[number];
 export type EntityCategory = (typeof ENTITY_CATEGORIES)[number];
-export type MeleeAttackCategory = (typeof MELEE_ATTACK_CATEGORIES)
+export type AttackCategories = (typeof ATTACK_CATEGORIES)
 
 export type Entity = {
   id: number;
@@ -60,10 +59,7 @@ export type Entity = {
   talking: boolean;
   attacking?: boolean;
   blocking?: boolean;
-  abilities?:{
-    melee?: MeleeAttackCategory 
-  } |null
-  
+  abilities?: AttackCategories  
   inventory: {
     size: number;
     items: Tuple<InvetorySlot, 16>;

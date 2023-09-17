@@ -13,6 +13,26 @@ export const CATEGORIES = [
 ] as const;
 export type ItemCategory = (typeof CATEGORIES)[number];
 
+export type InvetorySlot = {
+  amount: number;
+  id: number;
+};
+
+export type Item = {
+  image: string;
+  name: string;
+  id: number;
+  category: ItemCategory;
+  description?: string;
+  maxStack?: number;
+  value: number;
+  damage?: number;
+  defense?: number;
+  heal?: number;
+  range?: number;
+  onUse?: () => void;
+};
+
 export type Entity = {
   id: number;
   name: string;
@@ -58,22 +78,19 @@ export type Entity = {
 };
 export type Player = Entity & {};
 
-export type InvetorySlot = {
-  amount: number;
+export type MapObject = {
   id: number;
+  name: string;
+  image: string;
+  x: number;
+  y: number;
 };
 
-export type Item = {
-  image: string;
-  name: string;
+export type Tile = {
   id: number;
-  category: ItemCategory;
-  description?: string;
-  maxStack?: number;
-  value: number;
-  damage?: number;
-  defense?: number;
-  heal?: number;
-  range?: number;
-  onUse?: () => void;
+  name: string;
+  image: string;
+  walkable: boolean;
+  x: number;
+  y: number;
 };

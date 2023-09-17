@@ -49,4 +49,3 @@ const { area } = toRefs(props);
   position: absolute;
 }
 </style>
-../ts/area

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { player } from '../ts/player'
 </script>
 <template>

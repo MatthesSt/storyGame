@@ -1,4 +1,4 @@
-import { createInventoryWithItems, entityFactory } from './utils'
+import { entityFactory } from './utils'
 import { player } from './player'
 import { Entity } from './types'
 import { ref } from 'vue'

@@ -27,7 +27,6 @@ export const player = ref<Player>(
       size: 16,
       items: createInventoryWithItems([{ amount: 1, id: 1 }]),
     },
-    equipment: createEquipmentWithItems(),
   })
 )
 

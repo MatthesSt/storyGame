@@ -11,7 +11,7 @@ export const EQUIPMENT_CATEGORIES = [
   'tool',
   'accessory',
 ] as const
-export const ENTITY_CATEGORIES = ['npc', 'player', 'enemy', undefined] as const
+export const ENTITY_CATEGORIES = ['npc', 'player', 'enemy'] as const
 export const WEAPON_CATEGORIES = ['magic', 'melee', 'range'] as const
 export const ATTACK_CATEGORIES = {
   melee: {
@@ -59,7 +59,7 @@ export type Entity = {
     openend?: boolean
     blockOpen?: boolean
   }
-  equipment?: Record<EquipmentCategory, Item | null>
+  equipment: Record<EquipmentCategory, Item | null>
   currentDialog?: string
   dialog?: Record<
     string,

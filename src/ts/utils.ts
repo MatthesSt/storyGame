@@ -24,17 +24,15 @@ export function createEquipmentWithItems(items?: Partial<Entity['equipment']>) {
   }
 }
 
-export function entityFactory(options: Partial<Entity> = {}): Entity {
+export function entityFactory(options: { type: Entity['type'] } & Partial<Entity>): Entity {
   return {
     id: entityCounter.value++,
     name: '',
-    type: undefined,
     lookRadius: 0,
     maxHealth: 0,
     currentHealth: 0,
     maxMana: 0,
     currentMana: 0,
-    abilities: undefined,
     x: 0,
     y: 0,
     width: 40,

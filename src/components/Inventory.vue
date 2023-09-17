@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Entity, EquipmentCategory, EQUIPMENT_CATEGORIES } from '../ts/types'
+import { Entity, EquipmentCategory, EQUIPMENT_CATEGORIES, Item } from '../ts/types'
 import { items } from '../ts/items'
 import { npcInventory } from '../ts/npcs'
 import {
@@ -28,7 +28,6 @@ function dragFromInventory(itemId: number) {
 }
 
 function dragFromEquipment(key: EquipmentCategory) {
-  if (!player.value.equipment) return
   movingItem.value = {
     itemId: player.value.equipment[key]!.id,
     from: 'equipment',
@@ -43,7 +42,7 @@ function markAsDropzone(event: DragEvent, storage: 'inventory' | 'equipment') {
   //no space in inventory/equipment
   if (
     (storage == 'inventory' && !hasFreeInventorySpace(player.value, movingItem.value.itemId)) ||
-    (storage == 'equipment' && player.value.equipment?.[items[movingItem.value.itemId].category as EquipmentCategory])
+    (storage == 'equipment' && player.value.equipment[items[movingItem.value.itemId].category as EquipmentCategory])
   ) {
     return (event.dataTransfer!.dropEffect = 'none')
   }
@@ -55,15 +54,15 @@ function markAsDropzone(event: DragEvent, storage: 'inventory' | 'equipment') {
 function dropAtEquipment() {
   if (!movingItem.value || !movingItem.value.itemId) return
   if (!EQUIPMENT_CATEGORIES.find((e) => e == items[movingItem.value.itemId!].category)) return
-  if (player.value.equipment?.[items[movingItem.value.itemId].category as EquipmentCategory]) return
-  player.value.equipment![items[movingItem.value.itemId].category as EquipmentCategory] = items[movingItem.value.itemId]
+  if (player.value.equipment[items[movingItem.value.itemId].category as EquipmentCategory]) return
+  player.value.equipment[items[movingItem.value.itemId].category as EquipmentCategory] = items[movingItem.value.itemId]
 
   takeItemFromEntity(player.value, movingItem.value.itemId)
   movingItem.value = { itemId: null }
 }
 function dropAtInventory() {
   giveItemToEntity(player.value, movingItem.value.itemId!)
-  player.value.equipment![items[movingItem.value.itemId!].category as EquipmentCategory] = null
+  player.value.equipment[items[movingItem.value.itemId!].category as EquipmentCategory] = null
   movingItem.value = { itemId: null }
 }
 </script>
@@ -89,7 +88,7 @@ function dropAtInventory() {
     </div>
   </section>
   <section class="playerEquipment">
-    <div class="equipment" v-for="[key, item] in Object.entries(player.equipment || {})">
+    <div class="equipment" v-for="[key, item] in Object.entries(player.equipment)">
       <img
         :src="item?.image || `equipment_bg/${key}_bg.png`"
         style="height: 100%; width: 100%; object-fit: contain"

@@ -13,25 +13,46 @@ export const npcs = ref<Entity[]>([
     x: 160,
     y: 160,
     money: 10,
+    image: 'npc/NPC_1.png',
     dialog: {
       init: {
-        text: 'test',
+        text: 'Greetings, traveler. Can you help me ?',
         answers: [
           {
-            text: 'continue',
-            next: 'exit',
+            text: 'Yes!',
+            next: 'help',
           },
           {
-            text: 'bye',
+            text: 'No, not right now.',
           },
         ],
       },
-      exit: {
-        text: 'test2',
+      help: {
+        text: 'Can you bring me a red Flower? You should find some west of here.',
         answers: [
           {
-            text: 'back',
-            next: 'init',
+            text: 'On it!',
+            next: 'agree',
+          },
+          {
+            text: 'I changed my mind.',
+            next: 'disagree',
+          },
+        ],
+      },
+      agree: {
+        text: 'Thank you so much!',
+        answers: [
+          {
+            text: 'See You Later.',
+          },
+        ],
+      },
+      disagree: {
+        text: 'Oh... okay.',
+        answers: [
+          {
+            text: 'Bye',
           },
         ],
       },

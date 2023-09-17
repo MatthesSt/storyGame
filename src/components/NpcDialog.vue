@@ -22,7 +22,7 @@ function execute(npc: Entity, answer: { action?: () => void; text: string; next?
 <template>
   <div class="communicationWrapper" v-if="npc.currentDialog && npc.talking">
     <div class="dialog">
-      {{ npc.dialog?.[npc.currentDialog] }}
+      {{ npc.dialog?.[npc.currentDialog].text }}
     </div>
     <div class="answers">
       <div v-for="(answer, index) in npc.dialog?.[npc.currentDialog].answers">
@@ -31,6 +31,7 @@ function execute(npc: Entity, answer: { action?: () => void; text: string; next?
     </div>
   </div>
 </template>
+
 <style scoped lang="scss">
 $boxWidth: 30%;
 .communicationWrapper {

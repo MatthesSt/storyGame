@@ -59,4 +59,13 @@ export const items: Record<Item['id'], Item> = {
     heal: 5,
     image: '/item/consumable/HealthPotion.png',
   },
+  6: {
+    name: 'ItemBag',
+    id: 6,
+    category: 'misc',
+    description: 'A bag with items in it',
+    maxStack: 1,
+    value: 0,
+    image: '/item/bag.png',
+  },
 }

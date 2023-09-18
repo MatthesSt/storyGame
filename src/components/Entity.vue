@@ -17,9 +17,10 @@ defineProps<{
       entity.image
         ? 'background-image:url(' + entity.image + ')'
         : 'background-color:' + (entity.talking ? 'red' : 'black')
-    }`"
+    }
+    `"
   >
-    <template v-if="entity.type == 'enemy'">
+    <div v-if="entity.type == 'enemy'">
       <img
         class="emptyHealth"
         src="/emptyHealth.png"
@@ -34,7 +35,7 @@ defineProps<{
       height: 5px;      
       `"
       />
-    </template>
+    </div>
   </div>
 </template>
 <style scoped lang="scss">
@@ -59,6 +60,7 @@ $size: calc(#{$tileSize} * #{$ration});
     transform: translateY(-100%) translateX(calc($size / 2)) translateX(-50%);
   }
 }
+
 .canTalk::after {
   content: 'talk (e)';
   width: max-content;

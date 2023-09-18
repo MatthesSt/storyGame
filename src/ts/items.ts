@@ -49,4 +49,14 @@ export const items: Record<Item['id'], Item> = {
     useSpeed: 0,
     image: '/item/armor/leather_pants.png',
   },
+  5: {
+    name: 'Health Potion',
+    id: 5,
+    category: 'consumable',
+    description: 'A Potion with low Healing affect',
+    maxStack: 20,
+    value: 10,
+    heal: 5,
+    image: '/item/consumable/HealthPotion.png',
+  },
 }

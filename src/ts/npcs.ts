@@ -75,6 +75,10 @@ export const npcs = ref<Entity[]>([
           amount: 3,
           id: 1,
         },
+        {
+          amount: 5,
+          id: 5,
+        },
       ]),
       openend: false,
     },

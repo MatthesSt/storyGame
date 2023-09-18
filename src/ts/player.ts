@@ -38,6 +38,7 @@ const playerInputInterval = setInterval(() => {
   if (!player.value.talking) {
     playerMovement()
     performPlayerAttack()
+    playerInteractionen()
     if (gameTicks.value % 12 == 0) checkPortals()
   }
   playerCommunication()
@@ -53,6 +54,32 @@ function playerCommunication() {
   player.value.talking = true
   talkingNpc.talking = true
   talkingNpc.currentDialog = talkingNpc.currentDialog || ''
+}
+
+function playerInteractionen() {
+  if (isPressed('h')) healPlayer()
+}
+
+function healPlayer() {
+  //TODO: magic number 5 erstzen durhc filter nach ausgewähltem heal item/ bestes heal item
+  if (!player.value.inventory.items.find((i) => i.id === 5)) return
+  if (player.value.inventory.items.find((i) => i.id === 5)!.amount <= 0) return
+  if (player.value.currentHealth + items[5].heal! >= player.value.maxHealth) {
+    console.log(player.value.inventory)
+    player.value.currentHealth = player.value.maxHealth
+    takeItemFromEntity(player.value, 5)
+  } else if (player.value.currentHealth + items[5].heal! < player.value.maxHealth) {
+    player.value.currentHealth += items[5].heal!
+    takeItemFromEntity(player.value, 5)
+  }
+}
+
+export function takeItemFromEntity(entity: Entity, itemId: number) {
+  const item = entity.inventory.items.find((i) => i.id == itemId)!
+  item.amount--
+  if (item.amount <= 0) {
+    item.id = 0
+  }
 }
 
 function playerMovement() {
@@ -151,14 +178,6 @@ function hasMoney(entity: Entity, amount: number) {
 
 function hasItem(entity: Entity, itemId: number) {
   return entity.inventory.items.find((i) => i.id == itemId)
-}
-
-export function takeItemFromEntity(entity: Entity, itemId: number) {
-  const item = entity.inventory.items.find((i) => i.id == itemId)!
-  item.amount--
-  if (item.amount <= 0) {
-    item.id = 0
-  }
 }
 
 export function giveItemToEntity(entity: Entity, itemId: number) {

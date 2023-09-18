@@ -24,7 +24,6 @@ const { area } = toRefs(props)
     <slot name="player"></slot>
     <slot name="npcs"></slot>
     <slot name="enemies"></slot>
-    <slot name="dialog"></slot>
     <slot name="inventory"></slot>
   </div>
 </template>

@@ -1,4 +1,8 @@
-import { Tuple } from './typehelpers'
+import ABILITIES from '../data/abilities.json'
+
+export type Tuple<T, N extends number> = N extends N ? (number extends N ? T[] : _TupleOf<T, N, []>) : never
+
+export type _TupleOf<T, N extends number, R extends unknown[]> = R['length'] extends N ? R : _TupleOf<T, N, [T, ...R]>
 
 export const EQUIPMENT_CATEGORIES = [
   'head',
@@ -13,41 +17,13 @@ export const EQUIPMENT_CATEGORIES = [
 ] as const
 export const ENTITY_CATEGORIES = ['npc', 'player', 'enemy'] as const
 export const WEAPON_CATEGORIES = ['magic', 'melee', 'range'] as const
-export const ABILITY_CATEGORIES = {
-  attack: {
-    melee: {
-      bite: {
-        id: 1,
-        damage: 1,
-        heal: 1,
-        attackSpeed: 10,
-      },
-      bodySlam: {
-        id: 2,
-        damage: 1,
-        heal: 0,
-        attackSpeed: 10,
-      },
-    },
-    range: {
-      slimeSpit: {
-        id: 1,
-        damage: 1,
-        heal: -1,
-        attackSpeed: 10,
-      },
-    },
-  },
-} as const
 
 export type ItemCategory = 'consumable' | 'material' | 'misc' | EquipmentCategory
 export type WeaponCategory = (typeof WEAPON_CATEGORIES)[number]
 export type EntityCategory = (typeof ENTITY_CATEGORIES)[number]
-export type AbilityCategories = typeof ABILITY_CATEGORIES
 export type EquipmentCategory = (typeof EQUIPMENT_CATEGORIES)[number]
 
 export type Entity = {
-  id: number
   level: number
   type: EntityCategory
   name: string
@@ -67,11 +43,7 @@ export type Entity = {
   talking: boolean
   attacking?: boolean
   blocking?: boolean
-  abilities?: {
-    melee?: AbilityCategories['attack']['melee'][keyof AbilityCategories['attack']['melee']][]
-    range?: AbilityCategories['attack']['range'][keyof AbilityCategories['attack']['range']][]
-  }
-
+  abilities?: (keyof typeof ABILITIES)[]
   inventory: {
     size: number
     items: Tuple<InvetorySlot, 16>
@@ -80,17 +52,19 @@ export type Entity = {
   }
   equipment: Record<EquipmentCategory, Item | null>
   currentDialog?: string
-  dialog?: Record<
-    string,
-    {
-      text: string
-      answers: {
-        text: string
-        next?: string
-        action?: () => void
-      }[]
-    }
-  >
+  dialog?:
+    | Record<
+        'initial' | (string & {}),
+        {
+          text: string
+          answers: {
+            text: string
+            next?: string
+            action?: () => void
+          }[]
+        }
+      >
+    | {}
 }
 export type Player = Entity & {}
 

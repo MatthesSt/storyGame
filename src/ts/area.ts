@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { getNpcs } from './utils'
 
 export const currentArea = ref<AreaName>('spawn')
 export type Area = (typeof areas.value)[keyof typeof areas.value]
@@ -27,8 +28,8 @@ export const areas = ref<
   spawn: {
     width: 15,
     height: 10,
-    npcs: [1, 2],
-    enemies: [3],
+    npcs: getNpcs(['NPC', 'Merchant']),
+    enemies: [],
     floorImage: 'environment/spawn_floor.png',
     portals: [
       {

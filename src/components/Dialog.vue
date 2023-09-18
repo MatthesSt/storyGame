@@ -3,16 +3,16 @@ import { Entity } from '../ts/types'
 import { player } from '../ts/player'
 
 defineProps<{
-  npc: Entity
+  entity: Entity
 }>()
 
 function execute(npc: Entity, answer: { action?: () => void; text: string; next?: string }) {
   if (answer.next) {
     npc.currentDialog = answer.next
   } else {
-    npc.currentDialog = 'init'
-    npc.talking = false
+    npc.currentDialog = 'initial'
     npc.inventory.openend = false
+    npc.talking = false
     player.value.talking = false
   }
   if (answer.action) answer.action()
@@ -20,13 +20,13 @@ function execute(npc: Entity, answer: { action?: () => void; text: string; next?
 </script>
 
 <template>
-  <div class="communicationWrapper" v-if="npc.currentDialog && npc.talking">
+  <div class="communicationWrapper" v-if="entity.currentDialog && entity.talking">
     <div class="dialog">
-      {{ npc.dialog?.[npc.currentDialog].text }}
+      {{ entity.dialog?.[entity.currentDialog].text }}
     </div>
     <div class="answers">
-      <div v-for="(answer, index) in npc.dialog?.[npc.currentDialog].answers">
-        <button class="answer" @click.stop="execute(npc, answer)">{{ index + 1 }}: {{ answer.text }}</button>
+      <div v-for="(answer, index) in entity.dialog?.[entity.currentDialog].answers">
+        <button class="answer" @click.stop="execute(entity, answer)">{{ index + 1 }}: {{ answer.text }}</button>
       </div>
     </div>
   </div>

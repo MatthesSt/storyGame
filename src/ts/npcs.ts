@@ -1,13 +1,12 @@
 import { ref } from 'vue'
 import { Entity, InvetorySlot } from './types'
-import { createInventoryWithItems, entityFactory } from './utils'
-import { Tuple } from './typehelpers'
+import { createInventoryWithItems, entityFactory } from './factory'
+import { Tuple } from './types'
 
-export const npcInventory = ref<Tuple<InvetorySlot, 16>>(createInventoryWithItems())
+export const npcInventory = ref<Tuple<InvetorySlot, 16>>(createInventoryWithItems().items)
 
-export const npcs = ref<Entity[]>([
-  entityFactory({
-    id: 1,
+export const npcs = ref<Record<string, Entity>>({
+  NPC: entityFactory({
     name: 'NPC',
     type: 'npc',
     x: 160,
@@ -15,7 +14,7 @@ export const npcs = ref<Entity[]>([
     money: 10,
     image: 'npc/NPC_1.png',
     dialog: {
-      init: {
+      initial: {
         text: 'Greetings, traveler. Can you help me ?',
         answers: [
           {
@@ -57,40 +56,36 @@ export const npcs = ref<Entity[]>([
         ],
       },
     },
-    currentDialog: 'init',
+    currentDialog: 'initial',
   }),
-  entityFactory({
-    id: 2,
+  Merchant: entityFactory({
     name: 'Merchant',
     type: 'npc',
     x: 260,
     y: 260,
     image: 'npc/Merchant.png',
     money: 10,
-    currentDialog: 'init',
-    inventory: {
-      size: 16,
-      items: createInventoryWithItems([
-        {
-          amount: 3,
-          id: 1,
-        },
-        {
-          amount: 5,
-          id: 5,
-        },
-      ]),
-      openend: false,
-    },
+    currentDialog: 'initial',
+    inventory: createInventoryWithItems([
+      {
+        amount: 3,
+        id: 1,
+      },
+      {
+        amount: 5,
+        id: 5,
+      },
+    ]),
+
     dialog: {
-      init: {
+      initial: {
         text: 'Hi',
         answers: [
           {
             text: 'open shop',
             next: 'exit',
             action: () => {
-              const inventory = npcs.value.find((n) => n.id == 2)!.inventory
+              const inventory = npcs.value['Merchant'].inventory
               npcInventory.value = inventory.items
               inventory.openend = true
             },
@@ -110,4 +105,4 @@ export const npcs = ref<Entity[]>([
       },
     },
   }),
-])
+})

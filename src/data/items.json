@@ -1,0 +1,69 @@
+{
+  "1": {
+    "name": "Stick",
+    "id": 1,
+    "category": "weapon",
+    "description": "A stick",
+    "type": "melee",
+    "maxStack": 10,
+    "value": 1,
+    "damage": 3,
+    "useSpeed": 10,
+    "range": 40,
+    "image": "/item/weapon/wood_stick.png"
+  },
+  "2": {
+    "name": "Wood Sword",
+    "id": 2,
+    "category": "weapon",
+    "type": "melee",
+    "description": "A sword that was probaply used for training",
+    "maxStack": 1,
+    "value": 5,
+    "damage": 5,
+    "useSpeed": 4,
+    "image": "/item/weapon/wood_sword.png"
+  },
+  "3": {
+    "name": "Wood Dagger",
+    "id": 3,
+    "type": "melee",
+    "category": "weapon",
+    "description": "Looks like a Dagger made out of Wood",
+    "maxStack": 5,
+    "value": 5,
+    "damage": 6,
+    "useSpeed": 4,
+    "image": "/item/weapon/wood_dagger.png"
+  },
+  "4": {
+    "name": "Leather Pants",
+    "id": 4,
+    "category": "legs",
+    "description": "Clean pants made out of leather",
+    "maxStack": 1,
+    "value": 7,
+    "defense": 2,
+    "useSpeed": 0,
+    "image": "/item/armor/leather_pants.png"
+  },
+  "5": {
+    "name": "Health Potion",
+    "id": 5,
+    "category": "consumable",
+    "description": "A Potion with low Healing affect",
+    "maxStack": 20,
+    "value": 10,
+    "heal": 5,
+    "image": "/item/consumable/HealthPotion.png"
+  },
+  "6": {
+    "name": "ItemBag",
+    "id": 6,
+    "category": "misc",
+    "description": "A bag with items in it",
+    "maxStack": 1,
+    "value": 0,
+    "image": "/item/bag.png"
+  }
+}

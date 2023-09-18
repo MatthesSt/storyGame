@@ -1,16 +1,16 @@
 import { computed, ref } from 'vue'
+import { gameTicks, ticksPerSecond } from './gameHandler'
 import { isPressed } from './controls'
 import { getDistance, getTileIndices, getTilePosition } from './math'
 import { Entity, Player } from './types'
 import { npcs } from './npcs'
 import { currentArea, areas } from './area'
 import { items } from './items'
-import { createInventoryWithItems, entityFactory, createEquipmentWithItems } from './utils'
+import { createInventoryWithItems, entityFactory } from './factory'
 import { performPlayerAttack } from './combat'
 
 export const player = ref<Player>(
   entityFactory({
-    id: 0,
     type: 'player',
     name: 'Player',
     maxHealth: 30,
@@ -23,15 +23,9 @@ export const player = ref<Player>(
     movespeed: 3,
     image: 'player/player_default_front.png',
 
-    inventory: {
-      size: 16,
-      items: createInventoryWithItems([{ amount: 1, id: 1 }]),
-    },
+    inventory: createInventoryWithItems([{ amount: 1, id: 1 }]),
   })
 )
-
-export const gameTicks = ref(0)
-export const ticksPerSecond = 24
 
 const playerInputInterval = setInterval(() => {
   gameTicks.value++

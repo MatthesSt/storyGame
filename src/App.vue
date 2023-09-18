@@ -2,21 +2,16 @@
 import Area from './components/Area.vue'
 import Entity from './components/Entity.vue'
 import Stats from './components/Stats.vue'
-import NpcDialog from './components/NpcDialog.vue'
 import Inventory from './components/Inventory.vue'
 import { areas, currentArea } from './ts/area'
 import { player, closeNpc } from './ts/player'
 import { npcs } from './ts/npcs'
-import { getTileIndices } from './ts/math'
 import { enemies } from './ts/enemy'
 </script>
 
 <template>
   <main>
-    <div id="debugArea" style="position: absolute; inset: 0; color: white">
-      <span> {{ player.x }}, {{ player.y }},{{ getTileIndices([player.x, player.y]) }} </span>
-      <span>portal: {{ areas[currentArea].portals[0].position }}</span>
-    </div>
+    <div id="debugArea" style="position: absolute; inset: 0; color: white"></div>
     <Area :area="areas[currentArea]">
       <template #player>
         <Entity :entity="player"></Entity>
@@ -34,9 +29,6 @@ import { enemies } from './ts/enemy'
           :entity="enemy"
           :style="`width: ${enemy.width}px; height: ${enemy.height}px`"
         ></Entity>
-      </template>
-      <template #dialog>
-        <NpcDialog v-if="closeNpc" :npc="closeNpc" />
       </template>
       <template #inventory>
         <Inventory :player="player" />

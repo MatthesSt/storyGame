@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Entity } from '../ts/types'
+import Dialog from './Dialog.vue'
+
 defineProps<{
   entity: Entity
   canTalk?: boolean
@@ -13,11 +15,7 @@ defineProps<{
     :style="`
     top:${entity.y}px;
     left:${entity.x}px;
-    ${
-      entity.image
-        ? 'background-image:url(' + entity.image + ')'
-        : 'background-color:' + (entity.talking ? 'red' : 'black')
-    }
+    background-image:url(${entity.image})
     `"
   >
     <div v-if="entity.type == 'enemy'">
@@ -37,6 +35,7 @@ defineProps<{
       />
     </div>
   </div>
+  <Dialog :entity="entity" />
 </template>
 <style scoped lang="scss">
 @import '../style.scss';
@@ -50,7 +49,6 @@ $size: calc(#{$tileSize} * #{$ration});
   background-size: cover;
   background-repeat: no-repeat;
   transform: translate(-50%, -50%);
-  // border-radius: 30%;
   &::before {
     content: attr(data-name);
     top: -10px;

@@ -1,0 +1,20 @@
+{
+  "bite": {
+    "damage": 1,
+    "heal": 1,
+    "attackSpeed": 10,
+    "range": 1
+  },
+  "bodySlam": {
+    "damage": 1,
+    "heal": 0,
+    "attackSpeed": 10,
+    "range": 1
+  },
+  "slimeSpit": {
+    "damage": 1,
+    "heal": -1,
+    "attackSpeed": 10,
+    "range": 3
+  }
+}
